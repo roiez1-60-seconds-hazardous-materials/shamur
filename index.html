@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>שמור · Shamur · v3</title>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Suez+One&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;600&family=Heebo:wght@300;400;500;700&family=Cardo:ital,wght@0,400;1,400&family=Abril+Fatface&family=Italiana&display=swap" rel="stylesheet">
+<style>
+:root{
+--paper:#FAF5EB;--pw:#F7EFDF;--cr:#F5EDE0;--cw:#EFE3CF;--cd:#E8DCC8;
+--ink:#1A1410;--is:#3D2E20;--im:#6B5B4E;--if:#A09080;
+--bg:#8B2635;--og:#C4541C;--ol:#6B7340;--gd:#D4A94A;--nv:#2C3E50;--dp:#1E2A38;
+--pk:#E88DA8;--bl:#F4C2C2;--tr:#D4846A;--pe:#F7DCC7;--sg:#9BA87D;
+--sm:0 1px 2px rgba(70,40,20,.06);--ss:0 2px 8px rgba(70,40,20,.08);
+--sm2:0 4px 16px rgba(70,40,20,.12);--sl:0 10px 30px rgba(70,40,20,.16);--s2:0 40px 100px rgba(30,15,5,.30);
+--fh:"Frank Ruhl Libre",serif;--fd:"Suez One",serif;--fs:"Playfair Display",serif;
+--fi:"Italiana",serif;--fc:"Cardo",serif;--fsc:"Caveat",cursive;--fsa:"Heebo",sans-serif;--fab:"Abril Fatface",serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--fh);color:var(--ink);background:var(--pw);line-height:1.65;overflow-x:hidden;
+background-image:radial-gradient(ellipse at 18% 10%,rgba(196,84,28,.035) 0%,transparent 45%),
+radial-gradient(ellipse at 88% 45%,rgba(139,38,53,.04) 0%,transparent 50%)}
+body::after{content:"";position:fixed;top:0;left:0;right:0;height:2px;
+background:linear-gradient(90deg,transparent,var(--gd) 30%,var(--gd) 70%,transparent);opacity:.4;z-index:199}
+.page{position:relative;z-index:1}
+.masthead{max-width:1360px;margin:0 auto;padding:28px 36px 0;display:flex;justify-content:space-between;
+align-items:center;flex-wrap:wrap;font-family:var(--fs);font-style:italic;font-size:11px;letter-spacing:3.5px;
+text-transform:uppercase;color:var(--im)}
+.masthead .dot{display:inline-block;width:4px;height:4px;background:var(--bg);border-radius:50%;margin:0 10px 3px;vertical-align:middle}
+.hero{min-height:96vh;padding:40px 24px 80px;position:relative;display:flex;align-items:center;justify-content:center}
+.hero-inner{max-width:1200px;width:100%;display:grid;grid-template-columns:1fr;gap:40px;align-items:center}
+@media(min-width:900px){.hero-inner{grid-template-columns:1.1fr 0.9fr;gap:60px}}
+.hero-title{font-family:var(--fd);font-size:clamp(110px,18vw,260px);font-weight:400;line-height:.85;color:var(--bg);
+letter-spacing:-6px;margin:0;position:relative;display:inline-block}
+.hero-title::after{content:"";position:absolute;bottom:16px;right:-4%;width:108%;height:14px;
+background:linear-gradient(90deg,transparent,var(--gd) 30%,var(--gd) 70%,transparent);
+opacity:.38;z-index:-1;transform:rotate(-1.5deg);filter:blur(1px)}
+.hero-latin{font-family:var(--fi);font-size:clamp(26px,4vw,38px);color:var(--ol);letter-spacing:10px;
+text-transform:lowercase;margin-top:14px;display:flex;align-items:center;gap:18px}
+.hero-latin::before,.hero-latin::after{content:"";width:30px;height:1px;background:var(--og);opacity:.5}
+.hero-tagline{font-family:var(--fh);font-size:18px;line-height:1.75;color:var(--is);margin-top:28px;max-width:440px}
+.hero-tagline b{color:var(--bg);font-weight:700}
+.hero-right{position:relative;display:flex;flex-direction:column;align-items:center;gap:28px}
+.hero-icon-stage{position:relative;padding:40px}
+.hero-icon-stage::before{content:"";position:absolute;inset:0;background:radial-gradient(circle,var(--bg) 0%,transparent 65%);opacity:.08;filter:blur(30px);z-index:0}
+.hero-icon{width:180px;height:180px;border-radius:42px;background:radial-gradient(circle at 28% 22%,rgba(255,255,255,.7),transparent 55%),
+linear-gradient(135deg,var(--cr) 0%,var(--cw) 60%,var(--cd) 100%);
+box-shadow:0 30px 80px rgba(40,20,5,.35),inset 0 3px 0 rgba(255,255,255,.55);display:grid;place-items:center;position:relative;z-index:2}
+.hero-icon .char{font-family:var(--fd);font-size:118px;color:var(--bg);line-height:1;transform:translateY(6px);position:relative;z-index:3}
+.hero-icon .ft{position:absolute;width:58px;top:14px;right:16px;opacity:.85}
+.hero-icon .fb{position:absolute;width:44px;bottom:16px;left:18px;opacity:.78}
+.hero-icon-caption{margin-top:20px;font-family:var(--fs);font-style:italic;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--im);text-align:center}
+.ha{position:absolute;width:240px;opacity:.6;z-index:1}
+.ha.br{bottom:-40px;right:-60px;transform:rotate(-15deg)}.ha.tl{top:-30px;left:-40px;transform:rotate(160deg);opacity:.4;width:180px}
+.hero-scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font-family:var(--fsc);font-size:18px;color:var(--im);opacity:.55;animation:bob 2.6s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translate(-50%,0);opacity:.55}50%{transform:translate(-50%,10px);opacity:.85}}
+.container{max-width:1360px;margin:0 auto;padding:0 28px}
+.section-hd{text-align:center;margin-bottom:70px;padding:0 20px;position:relative}
+.section-roman{font-family:var(--fs);font-style:italic;font-size:13px;letter-spacing:7px;text-transform:uppercase;color:var(--ol);margin-bottom:12px;display:inline-flex;align-items:center;gap:12px}
+.section-roman::before,.section-roman::after{content:"";width:30px;height:1px;background:var(--ol);opacity:.5}
+.section-ttl{font-family:var(--fd);font-size:clamp(42px,6vw,78px);color:var(--bg);line-height:1.02;letter-spacing:-2.5px;margin-bottom:18px}
+.section-ttl em{font-family:var(--fi);font-style:normal;color:var(--og);font-weight:400}
+.section-sub{font-family:var(--fh);font-size:19px;line-height:1.8;color:var(--im);max-width:640px;margin:0 auto}
+.folio{position:absolute;top:30px;font-family:var(--fs);font-style:italic;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--if);z-index:5}
+.folio.r{right:40px}.folio.l{left:40px}
+section{position:relative;padding:80px 0}
+.divider-ornament{text-align:center;padding:40px 0;color:var(--gd);font-size:22px;letter-spacing:14px;opacity:.55}
+.divider-ornament::before{content:"✦  ·  ✦"}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:none}
+.iphone{width:310px;height:640px;background:linear-gradient(145deg,#2a2420,#1a1410 60%,#0a0605);border-radius:46px;padding:8px;box-shadow:var(--s2),inset 0 0 0 2px rgba(255,255,255,.05);position:relative;flex-shrink:0}
+.iphone::before{content:"";position:absolute;top:14px;left:50%;transform:translateX(-50%);width:96px;height:24px;background:#0a0605;border-radius:18px;z-index:10}
+.iphone-screen{width:100%;height:100%;border-radius:40px;background:var(--paper);overflow:hidden;position:relative;display:flex;flex-direction:column}
+.sb{display:flex;justify-content:space-between;align-items:center;padding:18px 26px 4px;font-family:var(--fsa);font-size:12px;font-weight:600;color:var(--ink);flex-shrink:0}
+.tab-bar{position:absolute;bottom:0;left:0;right:0;display:grid;grid-template-columns:repeat(5,1fr);background:rgba(250,245,235,.95);backdrop-filter:blur(12px);border-top:1px solid rgba(139,38,53,.12);padding:10px 0 22px;z-index:5}
+.tab{display:flex;flex-direction:column;align-items:center;gap:3px;font-family:var(--fsa);font-size:9px;color:var(--im);opacity:.55}
+.tab.active{opacity:1;color:var(--bg)}.tab svg{width:20px;height:20px}
+.tab .fab{width:44px;height:44px;border-radius:50%;background:linear-gradient(145deg,var(--og),var(--bg));box-shadow:0 6px 16px rgba(139,38,53,.45);display:grid;place-items:center;margin-top:-22px}
+.tab .fab svg{width:18px;height:18px;stroke:var(--cr)}
+.phone-caption{text-align:center;margin-top:24px}
+.phone-caption .script{font-family:var(--fsc);font-size:22px;color:var(--bg);transform:rotate(-1deg);display:inline-block}
+.phone-caption .sub{display:block;font-family:var(--fs);font-style:italic;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--ol);margin-top:6px}
+.phones-row{display:flex;flex-wrap:wrap;justify-content:center;gap:40px;margin-top:40px}
+.scr-monthly-hdr{padding:14px 20px 10px;text-align:center;border-bottom:1px dashed rgba(139,38,53,.2);flex-shrink:0}
+.scr-monthly-hdr .yr{font-family:var(--fs);font-style:italic;font-size:10px;letter-spacing:4px;color:var(--ol);text-transform:uppercase}
+.scr-monthly-hdr .nm{font-family:var(--fd);font-size:28px;color:var(--bg);line-height:1.05;margin-top:2px;letter-spacing:-1px}
+.scr-monthly-hdr .en{font-family:var(--fi);font-size:13px;color:var(--og);letter-spacing:3px;text-transform:lowercase}
+.scr-weekdays{display:grid;grid-template-columns:repeat(7,1fr);padding:6px 10px 4px;background:var(--cw);gap:1px}
+.scr-weekdays span{font-family:var(--fs);font-style:italic;font-size:9px;color:var(--ol);text-align:center;letter-spacing:1px}
+.scr-cal{flex:1;display:grid;grid-template-columns:repeat(7,1fr);grid-auto-rows:minmax(38px,1fr);gap:1px;padding:4px 10px 88px;background:rgba(139,38,53,.08)}
+.cd{background:var(--paper);padding:3px 4px;font-size:9px;color:var(--is);display:flex;flex-direction:column;gap:2px;position:relative}
+.cd.prev,.cd.next{opacity:.3}.cd.today{background:var(--cw)}.cd.today .n{color:var(--bg);font-weight:700}.cd.hol{background:linear-gradient(135deg,var(--cr),var(--pe))}
+.cd .n{font-family:var(--fh);font-size:10px;color:var(--ink);font-weight:500;line-height:1}
+.cd .ev{display:block;padding:1px 2px;background:var(--ol);color:var(--cr);font-size:6.5px;border-radius:2px;line-height:1.2;text-align:center;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cd .ev.bg{background:var(--bg)}.cd .ev.og{background:var(--og)}.cd .ev.nv{background:var(--nv)}.cd .ev.gd{background:var(--gd)}.cd .ev.pk{background:var(--pk);color:var(--ink)}
+.cd .dot{position:absolute;bottom:2px;right:2px;width:5px;height:5px;border-radius:50%;background:var(--og)}
+.scr-wk-hdr{padding:18px 20px 14px;position:relative;border-bottom:1px dashed rgba(139,38,53,.25);flex-shrink:0}
+.scr-wk-hdr .m{font-family:var(--fi);font-size:14px;color:var(--ol);letter-spacing:4px;text-align:center;text-transform:lowercase}
+.scr-wk-hdr .wk{font-family:var(--fd);font-size:26px;color:var(--bg);text-align:center;line-height:1;margin-top:2px;letter-spacing:-1px}
+.scr-wk-hdr .wsub{font-family:var(--fsc);font-size:16px;color:var(--og);text-align:center;margin-top:6px;transform:rotate(-1deg)}
+.scr-days{flex:1;overflow-y:auto;padding:10px 14px 88px;scrollbar-width:none}
+.scr-days::-webkit-scrollbar{display:none}
+.dcard{position:relative;padding:12px 56px 12px 16px;margin:10px 0;background:var(--cr);border-radius:8px;box-shadow:var(--sm)}
+.dcard::before{content:attr(data-d);position:absolute;top:12px;right:14px;font-family:var(--fd);font-size:24px;color:var(--og);line-height:1;width:34px;text-align:center}
+.dcard::after{content:attr(data-w);position:absolute;top:40px;right:14px;font-family:var(--fs);font-style:italic;font-size:9px;color:var(--ol);letter-spacing:2px;text-transform:uppercase;width:34px;text-align:center}
+.dcard.we{background:var(--cw)}.dcard.hi{background:linear-gradient(135deg,var(--cr),var(--bl) 400%);border-left:3px solid var(--bg)}
+.dcard .pin{position:absolute;top:-6px;left:22px;width:12px;height:12px;background:radial-gradient(circle at 35% 35%,var(--tr) 10%,var(--bg) 80%);border-radius:50%;box-shadow:0 2px 3px rgba(40,20,5,.3)}
+.dcard .pin.ol{background:radial-gradient(circle at 35% 35%,var(--sg) 10%,var(--ol) 80%)}
+.dcard .dt{font-family:var(--fh);font-weight:700;font-size:13px;color:var(--ink);line-height:1.3;margin-bottom:3px}
+.dcard .dn{font-family:var(--fsa);font-weight:300;font-size:11px;color:var(--is);line-height:1.4}
+.dcard .fam-dots{display:inline-flex;gap:3px;vertical-align:middle;margin-right:4px}
+.dcard .fam-dots i{width:5px;height:5px;border-radius:50%;display:inline-block}
+.dcard .tag{display:inline-block;font-family:var(--fsc);font-size:13px;color:var(--bg);padding:0 8px;background:var(--bl);border-radius:10px;transform:rotate(-2deg);margin-top:6px}
+.dcard .tag.ol{background:var(--sg);color:var(--cr)}.dcard .tag.og{background:var(--pe);color:var(--og)}
+.scr-daily-hdr{position:relative;height:120px;overflow:hidden;flex-shrink:0}
+.scr-daily-bg{position:absolute;inset:0;background:linear-gradient(135deg,var(--og) 0%,var(--bg) 60%,#6B1C28 100%)}
+.scr-daily-date{position:absolute;top:14px;right:20px;color:var(--cr);z-index:2}
+.scr-daily-date .n{font-family:var(--fd);font-size:52px;line-height:1;letter-spacing:-2px}
+.scr-daily-date .s{font-family:var(--fi);font-size:13px;letter-spacing:3px;opacity:.9;margin-top:2px;text-transform:lowercase}
+.scr-daily-qt{position:absolute;bottom:10px;left:16px;right:16px;font-family:var(--fs);font-style:italic;font-size:11px;color:var(--cr);text-align:left;line-height:1.4;opacity:.95}
+.scr-canvas{flex:1;padding:16px 16px 88px;overflow-y:auto;position:relative;scrollbar-width:none}
+.scr-canvas::-webkit-scrollbar{display:none}
+.pola{display:inline-block;padding:7px 7px 20px;background:var(--cr);box-shadow:0 8px 18px rgba(70,40,20,.2);margin:8px 3px}
+.pola-photo{width:100px;height:100px;position:relative;overflow:hidden}
+.pola-photo.sunset{background:linear-gradient(135deg,var(--gd) 0%,var(--og) 40%,var(--bg) 85%)}
+.pola-photo.sunset::after{content:"";position:absolute;top:30%;left:50%;transform:translateX(-50%);width:34px;height:34px;background:radial-gradient(circle,#E6C670 40%,var(--og) 80%,transparent);border-radius:50%}
+.pola-photo.floral{background:linear-gradient(135deg,var(--sg) 0%,var(--ol) 100%)}
+.pola-cap{margin-top:5px;font-family:var(--fsc);font-size:13px;color:var(--bg);text-align:center;line-height:1}
+.chip{display:inline-block;padding:5px 12px;background:var(--bl);border-radius:20px;font-family:var(--fsc);font-size:14px;color:var(--bg);transform:rotate(-2deg);box-shadow:var(--sm);margin:3px}
+.hnote{font-family:var(--fsa);font-weight:300;font-size:12px;color:var(--nv);line-height:1.7;margin:12px 4px;padding-right:12px;border-right:2px solid var(--og);font-style:italic}
+.mood-line{display:flex;gap:8px;padding:10px 12px;background:var(--cw);border-radius:14px;margin-top:12px;align-items:center}
+.mood-line .lbl{font-family:var(--fh);font-size:11px;color:var(--is);margin-right:auto}
+.mood-dot{width:20px;height:20px;border-radius:50%;box-shadow:inset 0 -2px 4px rgba(0,0,0,.15)}
+.mood-dot.sel{border:2px solid var(--bg);transform:scale(1.15)}
+.scr-shop-hdr{padding:14px 18px 12px;background:linear-gradient(180deg,var(--paper) 0%,var(--cr) 100%);border-bottom:1px solid rgba(139,38,53,.1);flex-shrink:0}
+.scr-shop-title{font-family:var(--fd);font-size:22px;color:var(--bg);letter-spacing:-.5px}
+.scr-shop-sub{font-family:var(--fi);font-size:12px;letter-spacing:4px;color:var(--ol);text-transform:lowercase;margin-top:2px}
+.scr-search{margin-top:10px;display:flex;align-items:center;gap:8px;padding:7px 12px;background:var(--paper);border:1px solid rgba(139,38,53,.15);border-radius:20px;font-family:var(--fsa);font-size:12px;color:var(--im)}
+.scr-search svg{width:14px;height:14px;opacity:.5}
+.scr-chips{display:flex;gap:6px;margin-top:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.scr-chips::-webkit-scrollbar{display:none}
+.scr-chip{flex-shrink:0;padding:4px 10px;font-family:var(--fsa);font-size:10px;color:var(--im);background:var(--pw);border-radius:14px;font-weight:500}
+.scr-chip.active{background:var(--bg);color:var(--cr)}
+.scr-shop-body{flex:1;overflow-y:auto;padding:14px 16px 88px;scrollbar-width:none}
+.scr-shop-body::-webkit-scrollbar{display:none}
+.shop-section-h{font-family:var(--fh);font-weight:700;font-size:13px;color:var(--ink);margin:12px 0 8px;display:flex;justify-content:space-between;align-items:baseline}
+.shop-section-h .more{font-family:var(--fsa);font-size:10px;color:var(--bg);font-weight:500}
+.pack-card{background:linear-gradient(135deg,var(--bg),#9B4A1E);border-radius:10px;padding:16px 14px;color:var(--cr);position:relative;overflow:hidden;margin-bottom:16px}
+.pack-card .tag{display:inline-block;padding:2px 8px;background:var(--gd);color:var(--dp);font-family:var(--fsa);font-size:8px;font-weight:700;letter-spacing:1px;border-radius:10px;margin-bottom:6px}
+.pack-card .nm{font-family:var(--fd);font-size:22px;line-height:1;letter-spacing:-.5px}
+.pack-card .en{font-family:var(--fi);font-size:12px;letter-spacing:3px;color:var(--gd);margin-top:3px;text-transform:lowercase}
+.pack-card .dm{font-family:var(--fsa);font-size:10px;color:var(--cr);opacity:.8;margin-top:8px;font-weight:300}
+.pack-card .price{position:absolute;bottom:12px;left:14px;display:flex;align-items:center;gap:6px}
+.pack-card .price .p{font-family:var(--fs);font-style:italic;font-size:16px;font-weight:700;color:var(--cr)}
+.pack-card .price .get{padding:4px 10px;background:var(--cr);color:var(--bg);font-family:var(--fsa);font-size:10px;font-weight:700;border-radius:10px}
+.pack-card .preview-row{display:flex;gap:5px;margin-top:10px}
+.pack-card .preview-row .prev{width:28px;height:28px;background:rgba(255,255,255,.15);border-radius:5px;display:grid;place-items:center}
+.stk-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:12px}
+.stk-cell{aspect-ratio:1;background:var(--pw);border-radius:7px;display:grid;place-items:center;box-shadow:var(--sm);position:relative;overflow:hidden}
+.stk-cell svg{width:70%;height:70%}
+.stk-cell.owned::after{content:"✓";position:absolute;top:3px;left:3px;width:12px;height:12px;background:var(--ol);color:var(--cr);font-size:8px;display:grid;place-items:center;border-radius:50%;font-weight:700}
+.stk-cell.premium::after{content:"★";position:absolute;top:3px;left:3px;width:12px;height:12px;background:var(--gd);color:var(--dp);font-size:8px;display:grid;place-items:center;border-radius:50%;font-weight:700}
+.scr-ai{padding:18px 16px 88px;flex:1;overflow-y:auto;background:radial-gradient(ellipse at center top,rgba(184,134,11,.1) 0%,transparent 50%),var(--paper);scrollbar-width:none}
+.scr-ai::-webkit-scrollbar{display:none}
+.ai-hd{text-align:center;padding:10px 0 20px}
+.ai-hd .sparkle{font-size:22px;color:var(--gd);letter-spacing:8px}
+.ai-hd .t{font-family:var(--fd);font-size:22px;color:var(--bg);margin-top:4px;letter-spacing:-.5px}
+.ai-hd .s{font-family:var(--fi);font-size:11px;letter-spacing:3px;color:var(--ol);text-transform:lowercase;margin-top:2px}
+.ai-input{background:var(--cr);border-radius:10px;padding:12px 14px;margin:8px 0;position:relative;box-shadow:inset 0 0 0 1px rgba(139,38,53,.1)}
+.ai-input::before{content:"הטקסט שלך";position:absolute;top:-8px;right:12px;padding:1px 8px;background:var(--paper);font-family:var(--fsa);font-size:8px;color:var(--ol);letter-spacing:1.5px;border-radius:8px}
+.ai-input p{font-family:var(--fh);font-size:13px;color:var(--ink);line-height:1.6;font-style:italic}
+.ai-analysis{display:flex;flex-wrap:wrap;gap:5px;margin:10px 4px}
+.ai-tag{padding:3px 8px;background:var(--pw);font-family:var(--fsa);font-size:9px;color:var(--is);border-radius:10px;font-weight:500}
+.ai-tag b{color:var(--bg)}
+.ai-suggest{background:linear-gradient(135deg,var(--paper) 0%,var(--cr) 100%);border:1.5px solid var(--gd);border-radius:12px;padding:14px;margin:12px 0;position:relative}
+.ai-suggest::before{content:"✦ שמור חושבת";position:absolute;top:-10px;right:14px;padding:2px 10px;background:var(--gd);color:var(--dp);font-family:var(--fsa);font-size:9px;font-weight:700;letter-spacing:1px;border-radius:10px}
+.ai-suggest .hl{font-family:var(--fh);font-weight:700;font-size:12px;color:var(--ink);margin-bottom:8px;margin-top:6px}
+.ai-stk-row{display:grid;grid-template-columns:repeat(6,1fr);gap:5px;margin-top:6px}
+.ai-stk{aspect-ratio:1;background:var(--paper);border-radius:6px;display:grid;place-items:center;box-shadow:var(--sm)}
+.ai-stk svg{width:75%;height:75%}
+.ai-actions{display:flex;gap:6px;margin-top:10px}
+.ai-btn{flex:1;padding:7px;background:var(--bg);color:var(--cr);font-family:var(--fsa);font-size:10px;font-weight:600;border-radius:8px;text-align:center;cursor:pointer}
+.ai-btn.ghost{background:transparent;color:var(--bg);border:1px solid var(--bg)}
+.ai-pack-sugg{background:var(--paper);border:1px dashed rgba(139,38,53,.3);border-radius:10px;padding:10px 12px;margin-top:10px;display:flex;align-items:center;gap:10px}
+.ai-pack-sugg .icon{width:32px;height:32px;background:linear-gradient(135deg,#F07A5C,var(--tr));border-radius:6px;flex-shrink:0;display:grid;place-items:center;color:var(--cr);font-size:14px}
+.ai-pack-sugg .tx .n{font-family:var(--fh);font-size:12px;font-weight:700;color:var(--ink)}
+.ai-pack-sugg .tx .d{font-family:var(--fsa);font-size:9px;color:var(--im);margin-top:1px}
+.ai-pack-sugg .pr{font-family:var(--fs);font-style:italic;font-size:13px;font-weight:700;color:var(--bg)}
+.ai-voice-cta{display:flex;align-items:center;gap:10px;padding:12px;background:var(--paper);border:1px solid rgba(139,38,53,.15);border-radius:10px;margin-top:14px}
+.ai-voice-cta .mic{width:36px;height:36px;background:linear-gradient(135deg,var(--og),var(--bg));border-radius:50%;display:grid;place-items:center;color:var(--cr);flex-shrink:0;box-shadow:0 3px 8px rgba(139,38,53,.3)}
+.ai-voice-cta .mic svg{width:16px;height:16px}
+.ai-voice-cta .tx .n{font-family:var(--fh);font-size:12px;font-weight:700;color:var(--ink)}
+.ai-voice-cta .tx .d{font-family:var(--fsa);font-size:10px;color:var(--im)}
+.ipad-section-wrap{max-width:1100px;margin:60px auto 0;padding:40px 28px}
+.ipad-frame{width:100%;aspect-ratio:4/3;max-width:920px;margin:0 auto;background:linear-gradient(145deg,#3a3430,#1a1410 80%);border-radius:28px;padding:14px;box-shadow:var(--s2),inset 0 0 0 2px rgba(255,255,255,.06)}
+.ipad-screen{width:100%;height:100%;border-radius:18px;background:var(--paper);overflow:hidden;position:relative;display:flex}
+.ipad-tools{width:66px;background:var(--cr);border-left:1px solid rgba(139,38,53,.12);display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:6px;flex-shrink:0}
+.ipad-tool{width:42px;height:42px;display:grid;place-items:center;border-radius:10px;color:var(--is);position:relative}
+.ipad-tool.active{background:var(--bg);color:var(--cr);box-shadow:0 3px 8px rgba(139,38,53,.35)}
+.ipad-tool svg{width:20px;height:20px}
+.ipad-tool .badge{position:absolute;top:2px;left:2px;width:10px;height:10px;background:var(--gd);border-radius:50%;border:1.5px solid var(--cr)}
+.ipad-divider{width:32px;height:1px;background:rgba(139,38,53,.2);margin:6px 0}
+.ipad-swatch{display:flex;flex-direction:column;gap:4px;align-items:center;margin-top:4px}
+.ipad-swatch i{width:20px;height:20px;border-radius:50%;box-shadow:var(--sm)}
+.ipad-main{flex:1;display:flex;flex-direction:column}
+.ipad-toolbar{padding:10px 18px 8px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px dashed rgba(139,38,53,.15)}
+.ipad-tb-title{font-family:var(--fd);font-size:20px;color:var(--bg);letter-spacing:-.5px}
+.ipad-tb-sub{font-family:var(--fi);font-size:11px;color:var(--ol);letter-spacing:3px;text-transform:lowercase}
+.ipad-tb-right{display:flex;align-items:center;gap:10px}
+.ipad-tb-btn{padding:4px 10px;background:var(--pw);font-family:var(--fsa);font-size:10px;color:var(--is);border-radius:12px;font-weight:500}
+.ipad-tb-btn.primary{background:var(--bg);color:var(--cr)}
+.ipad-page{flex:1;margin:14px;background:var(--pw);border-radius:6px;position:relative;overflow:hidden}
+.ipad-page-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:16px;height:100%}
+.ipad-journal{padding:8px}
+.ipad-jd{font-family:var(--fd);font-size:52px;color:var(--bg);line-height:1;letter-spacing:-2px}
+.ipad-jw{font-family:var(--fi);font-size:13px;color:var(--ol);letter-spacing:4px;text-transform:lowercase;margin-top:4px}
+.ipad-jb{margin-top:14px;font-family:var(--fsa);font-size:12px;line-height:1.8;color:var(--nv);font-style:italic;font-weight:300}
+.ipad-jb .u{display:inline-block;position:relative}
+.ipad-jb .u::after{content:"";position:absolute;bottom:-2px;left:0;right:0;height:3px;background:var(--og);border-radius:2px;opacity:.6}
+.ipad-stk-row{margin-top:12px;display:flex;gap:5px;flex-wrap:wrap}
+.ipad-photos{position:relative;padding:8px}
+.ipad-polaroid{position:absolute;background:var(--cr);padding:6px 6px 18px;box-shadow:0 8px 20px rgba(70,40,20,.25)}
+.ipad-polaroid.p1{top:4px;right:6px;transform:rotate(-4deg)}.ipad-polaroid.p2{top:22px;left:18px;transform:rotate(3deg)}.ipad-polaroid.p3{top:148px;right:30px;transform:rotate(-2deg)}
+.ipad-polaroid .photo{width:92px;height:92px}
+.ipad-polaroid .cap{margin-top:3px;font-family:var(--fsc);font-size:12px;color:var(--bg);text-align:center}
+.ipad-polaroid.p1 .photo{background:linear-gradient(135deg,var(--gd),var(--og) 50%,var(--bg));position:relative}
+.ipad-polaroid.p1 .photo::after{content:"";position:absolute;top:30%;left:50%;transform:translateX(-50%);width:30px;height:30px;background:radial-gradient(circle,#E6C670,var(--og));border-radius:50%}
+.ipad-polaroid.p2 .photo{background:linear-gradient(135deg,var(--sg),var(--ol));position:relative}
+.ipad-polaroid.p2 .photo::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 40%,var(--tr) 5%,transparent 15%),radial-gradient(circle at 60% 60%,var(--bl) 6%,transparent 18%)}
+.ipad-polaroid.p3 .photo{background:linear-gradient(135deg,var(--pk),var(--bg))}
+.ipad-washi{position:absolute;top:128px;right:20%;width:120px;height:16px;background:repeating-linear-gradient(90deg,transparent 0 4px,rgba(0,0,0,.08) 4px 5px),linear-gradient(var(--ol),var(--ol));opacity:.85;transform:rotate(8deg);border-radius:1px}
+.pencil-cur{position:absolute;width:20px;height:20px;pointer-events:none;top:210px;left:58%;animation:pfloat 4s ease-in-out infinite;z-index:10}
+@keyframes pfloat{0%,100%{transform:translate(0,0) rotate(-30deg)}50%{transform:translate(-14px,-6px) rotate(-30deg)}}
+.ipad-ai-fab{position:absolute;bottom:24px;left:24px;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--gd) 0%,var(--og) 100%);display:grid;place-items:center;color:var(--cr);box-shadow:0 8px 24px rgba(184,134,11,.4);z-index:20}
+.ipad-ai-fab::after{content:"✦";position:absolute;top:-6px;right:-6px;width:18px;height:18px;background:var(--bg);color:var(--cr);border-radius:50%;font-size:10px;display:grid;place-items:center;border:2px solid var(--cr)}
+.family-members{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:24px;max-width:900px;margin:0 auto 60px;padding:0 20px}
+.mb{display:flex;flex-direction:column;align-items:center;text-align:center}
+.mb-av{width:88px;height:88px;border-radius:50%;display:grid;place-items:center;font-family:var(--fd);font-size:36px;color:var(--cr);box-shadow:0 12px 28px rgba(70,40,20,.2),inset 0 2px 0 rgba(255,255,255,.18);border:3px solid var(--cr);margin-bottom:12px}
+.mb-av.adi{background:linear-gradient(135deg,var(--bg),#6B1C28)}.mb-av.roei{background:linear-gradient(135deg,var(--nv),var(--dp))}.mb-av.maya{background:linear-gradient(135deg,var(--tr),#9B4A1E)}.mb-av.amit{background:linear-gradient(135deg,var(--ol),#3D3A38)}.mb-av.noam{background:linear-gradient(135deg,var(--gd),#B8860B);color:var(--bg)}.mb-av.romi{background:linear-gradient(135deg,var(--pk),var(--tr))}
+.mb-nm{font-family:var(--fh);font-size:17px;color:var(--ink);font-weight:700;margin-bottom:2px}
+.mb-ag{font-family:var(--fs);font-style:italic;font-size:11px;color:var(--im);letter-spacing:1px}
+.family-brand{max-width:680px;margin:40px auto 0;padding:36px 40px;background:var(--paper);border-radius:6px;box-shadow:var(--sm2);text-align:center;position:relative;border:1px solid rgba(139,38,53,.12)}
+.family-brand .n{font-family:var(--fd);font-size:38px;color:var(--bg);margin-top:16px;letter-spacing:-1px}
+.family-brand .en{font-family:var(--fi);font-size:18px;color:var(--og);letter-spacing:4px;margin-top:2px;text-transform:lowercase}
+.family-brand .d{font-family:var(--fh);font-size:16px;color:var(--is);line-height:1.75;margin-top:16px}
+.family-brand .italy-link{display:inline-block;margin-top:16px;padding:8px 18px;background:var(--bg);color:var(--cr);border-radius:20px;font-family:var(--fsa);font-size:12px;font-weight:600;text-decoration:none}
+.fcal{max-width:760px;margin:40px auto 0;background:var(--paper);border-radius:6px;box-shadow:var(--sm2);overflow:hidden;border:1px solid rgba(139,38,53,.1)}
+.fcal-hd{padding:18px 24px 14px;border-bottom:1px dashed rgba(139,38,53,.2);display:flex;justify-content:space-between;align-items:baseline}
+.fcal-hd .t{font-family:var(--fd);font-size:24px;color:var(--bg);letter-spacing:-.5px}
+.fcal-hd .m{font-family:var(--fi);font-size:13px;color:var(--ol);letter-spacing:3px;text-transform:lowercase}
+.fcal-body{padding:16px 20px}
+.fcal-ev{display:grid;grid-template-columns:50px 1fr auto;gap:14px;align-items:center;padding:12px 14px;background:var(--cr);border-radius:6px;margin-bottom:10px;border-right:4px solid var(--ol);transition:transform .3s}
+.fcal-ev:hover{transform:translateX(-3px)}.fcal-ev.bg{border-right-color:var(--bg)}.fcal-ev.og{border-right-color:var(--og)}.fcal-ev.nv{border-right-color:var(--nv)}.fcal-ev.gd{border-right-color:var(--gd)}.fcal-ev.pk{border-right-color:var(--pk)}
+.fcal-ev .d{font-family:var(--fd);font-size:24px;color:var(--og);text-align:center;line-height:1}
+.fcal-ev .info .t{font-family:var(--fh);font-size:16px;color:var(--ink);font-weight:500}
+.fcal-ev .info .p{font-family:var(--fsa);font-size:11px;color:var(--im);margin-top:2px;font-weight:400}
+.fcal-ev .time{font-family:var(--fs);font-style:italic;font-size:12px;color:var(--im);letter-spacing:1px}
+.fcal-ev .chip{display:inline-block;padding:2px 8px;background:linear-gradient(135deg,#B83A2E,#9B4A1E);color:var(--cr);font-family:var(--fsa);font-size:9px;font-weight:700;border-radius:10px;margin-left:4px}
+.wotw-wrap{padding:80px 24px;max-width:1000px;margin:0 auto}
+.wotw-stage{background:radial-gradient(ellipse at center,rgba(184,134,11,.08),transparent 70%),var(--paper);padding:60px 40px;border-radius:14px;border:1px solid rgba(184,134,11,.3);box-shadow:var(--sl);text-align:center;position:relative;overflow:hidden}
+.wotw-kick{font-family:var(--fs);font-style:italic;font-size:12px;letter-spacing:5px;text-transform:uppercase;color:var(--ol);margin-bottom:20px}
+.wotw-word{font-family:var(--fab);font-size:clamp(100px,18vw,200px);font-weight:400;color:var(--bg);line-height:.88;letter-spacing:-4px;margin:0;position:relative;display:inline-block}
+.wotw-word::after{content:"";position:absolute;bottom:16px;left:-5%;width:110%;height:14px;background:var(--gd);opacity:.35;z-index:-1;transform:rotate(-1.5deg);filter:blur(1px)}
+.wotw-hebrew{font-family:var(--fd);font-size:36px;color:var(--ol);margin-top:14px;letter-spacing:-1px}
+.wotw-desc{font-family:var(--fc);font-style:italic;font-size:17px;line-height:1.7;color:var(--is);max-width:500px;margin:24px auto 0}
+.wotw-intentions{margin-top:34px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.intent-chip{padding:8px 16px;background:var(--pw);border-radius:20px;font-family:var(--fh);font-size:13px;color:var(--is);box-shadow:var(--sm);font-weight:500}
+.mem-wrap{padding:80px 24px}
+.mem-grid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:24px}
+@media(min-width:760px){.mem-grid{grid-template-columns:1fr 1fr}}
+.mem-card{background:var(--paper);padding:30px 28px;border-radius:6px;box-shadow:var(--sm2);border:1px solid rgba(139,38,53,.1);position:relative}
+.mem-card::before{content:"";position:absolute;top:-8px;right:30px;width:60px;height:14px;background:repeating-linear-gradient(90deg,var(--bg) 0 3px,var(--cr) 3px 6px);opacity:.8;transform:rotate(-3deg);border-radius:1px}
+.mem-year{font-family:var(--fs);font-style:italic;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--ol);margin-bottom:6px;margin-top:8px}
+.mem-date{font-family:var(--fd);font-size:26px;color:var(--bg);letter-spacing:-.5px;margin-bottom:12px}
+.mem-poloroid{display:inline-block;padding:6px 6px 16px;background:var(--cr);box-shadow:var(--sm2)}
+.mem-poloroid .ph{width:80px;height:80px}
+.mem-poloroid .cap{margin-top:3px;font-family:var(--fsc);font-size:12px;color:var(--bg);text-align:center}
+.mem-note{font-family:var(--fsa);font-style:italic;font-size:13px;color:var(--is);line-height:1.65;margin-top:6px;padding-right:10px;border-right:2px solid var(--og);font-weight:300}
+.mem-search{max-width:600px;margin:40px auto 0;padding:18px 22px;background:var(--cr);border:1px solid rgba(139,38,53,.15);border-radius:30px;display:flex;align-items:center;gap:12px;box-shadow:var(--ss)}
+.mem-search svg{width:18px;height:18px;color:var(--ol)}
+.mem-search .txt{font-family:var(--fh);font-size:15px;color:var(--im);flex:1}
+.mem-search .hint{font-family:var(--fsc);font-size:15px;color:var(--bg)}
+.yb-wrap{padding:100px 24px;text-align:center;background:radial-gradient(ellipse at center,rgba(139,38,53,.04),transparent 60%)}
+.book-stage{max-width:560px;margin:60px auto 0;position:relative;perspective:1500px}
+.book{width:300px;height:400px;margin:0 auto;position:relative;transform:rotateY(-20deg) rotateX(5deg);transform-style:preserve-3d;transition:transform .8s cubic-bezier(.25,1,.5,1)}
+.book:hover{transform:rotateY(-10deg) rotateX(2deg)}
+.book-cover{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 25%,rgba(255,255,255,.12),transparent 60%),linear-gradient(135deg,var(--bg) 0%,#6B1C28 70%,#4A1018 100%);border-radius:4px 14px 14px 4px;padding:40px 30px;box-shadow:0 40px 80px rgba(20,10,0,.35);color:var(--cr);display:flex;flex-direction:column;text-align:center;border:2px solid var(--gd);border-left:none}
+.book-ornament{width:54px;height:54px;margin:0 auto 18px;opacity:.95}
+.book-ed{font-family:var(--fs);font-style:italic;font-size:10px;color:#E6C670;letter-spacing:5px;text-transform:uppercase;margin-bottom:14px}
+.book-t{font-family:var(--fd);font-size:62px;color:var(--cr);line-height:1;letter-spacing:-2px;margin-bottom:8px}
+.book-st{font-family:var(--fi);font-size:16px;color:#E6C670;letter-spacing:4px;margin-bottom:24px;text-transform:lowercase}
+.book-yr{font-family:var(--fs);font-size:52px;color:var(--gd);letter-spacing:8px;margin-top:auto;font-weight:300;font-style:italic}
+.book-nm{font-family:var(--fsc);font-size:22px;color:#E6C670;margin-top:16px}
+.yb-specs{max-width:600px;margin:50px auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.yb-spec{padding:18px 14px;background:var(--paper);border-radius:3px;text-align:center;border:1px solid rgba(139,38,53,.1);box-shadow:var(--sm)}
+.yb-spec .n{font-family:var(--fd);font-size:32px;color:var(--bg);line-height:1}
+.yb-spec .l{font-family:var(--fsa);font-size:11px;color:var(--im);margin-top:4px;letter-spacing:1px;text-transform:uppercase;font-weight:500}
+.integ-wrap{padding:80px 24px;max-width:1100px;margin:0 auto}
+.integ-grid{display:grid;grid-template-columns:1fr;gap:26px}
+@media(min-width:820px){.integ-grid{grid-template-columns:1fr 1fr 1fr}}
+.integ-card{background:var(--paper);padding:30px 26px;border-radius:6px;box-shadow:var(--sm2);border:1px solid rgba(139,38,53,.1)}
+.integ-card h4{font-family:var(--fd);font-size:24px;color:var(--bg);margin-bottom:4px;letter-spacing:-.5px}
+.integ-card .en{font-family:var(--fs);font-style:italic;font-size:12px;color:var(--ol);letter-spacing:3px;text-transform:uppercase;margin-bottom:14px}
+.integ-card p{font-family:var(--fsa);font-size:13px;line-height:1.7;color:var(--is);font-weight:400}
+.widget-mock{background:linear-gradient(135deg,var(--bg),#6B1C28);border-radius:22px;padding:14px 16px;color:var(--cr);margin-top:18px;box-shadow:var(--sm2)}
+.widget-mock .top{display:flex;justify-content:space-between;align-items:baseline}
+.widget-mock .dt{font-family:var(--fi);font-size:11px;letter-spacing:2px;text-transform:lowercase;color:var(--gd)}
+.widget-mock .sz{font-family:var(--fsa);font-size:9px;opacity:.7}
+.widget-mock .wotw-mini{font-family:var(--fab);font-size:44px;line-height:1;margin-top:6px;color:var(--cr);letter-spacing:-1px}
+.widget-mock .events-mini{margin-top:10px;display:flex;flex-direction:column;gap:3px}
+.widget-mock .events-mini .e{font-family:var(--fsa);font-size:10px;opacity:.9;display:flex;gap:6px;font-weight:400}
+.widget-mock .events-mini .e .tm{opacity:.7}
+.siri-mock{margin-top:18px;padding:14px;background:linear-gradient(180deg,#000 0%,#1a1a2e 100%);border-radius:14px;color:#fff;position:relative;overflow:hidden}
+.siri-mock::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(100,120,255,.3),transparent 60%)}
+.siri-mock .label{font-family:var(--fsa);font-size:9px;color:#8B9AC7;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;position:relative;z-index:1}
+.siri-mock .cmd{font-family:var(--fh);font-size:15px;color:#fff;font-style:italic;position:relative;z-index:1}
+.siri-mock .wave{display:flex;gap:3px;align-items:flex-end;height:20px;margin-top:8px;position:relative;z-index:1}
+.siri-mock .wave i{display:block;width:2px;background:linear-gradient(180deg,#6B9AFF,#C77DFF);border-radius:1px;animation:sw 1.2s ease-in-out infinite}
+.siri-mock .wave i:nth-child(1){height:8px;animation-delay:0s}.siri-mock .wave i:nth-child(2){height:14px;animation-delay:.1s}.siri-mock .wave i:nth-child(3){height:20px;animation-delay:.2s}.siri-mock .wave i:nth-child(4){height:16px;animation-delay:.3s}.siri-mock .wave i:nth-child(5){height:10px;animation-delay:.4s}.siri-mock .wave i:nth-child(6){height:18px;animation-delay:.5s}.siri-mock .wave i:nth-child(7){height:12px;animation-delay:.6s}
+@keyframes sw{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+.share-mock{margin-top:18px;background:rgba(255,255,255,.75);backdrop-filter:blur(12px);border-radius:14px;padding:14px;border:1px solid rgba(139,38,53,.1)}
+.share-mock .h{font-family:var(--fsa);font-size:11px;color:var(--im);margin-bottom:10px;letter-spacing:.5px;font-weight:500}
+.share-mock .apps{display:flex;gap:10px;justify-content:space-around}
+.share-mock .apps .app{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1}
+.share-mock .apps .app .ic{width:40px;height:40px;border-radius:10px;display:grid;place-items:center;color:#fff;font-weight:700;box-shadow:var(--sm)}
+.share-mock .apps .app .ic.shamur{background:linear-gradient(135deg,var(--cr),var(--cd));color:var(--bg);font-family:var(--fd)}.share-mock .apps .app .ic.ig{background:linear-gradient(135deg,#E1306C,#F77737)}.share-mock .apps .app .ic.wa{background:#25D366}.share-mock .apps .app .ic.mail{background:#007AFF}
+.share-mock .apps .app .lbl{font-family:var(--fsa);font-size:9px;color:var(--is);font-weight:400}
+.privacy-bar{max-width:900px;margin:60px auto;padding:30px 36px;background:var(--paper);border-radius:6px;border:1px solid rgba(139,38,53,.1);box-shadow:var(--ss);display:flex;gap:30px;flex-wrap:wrap;justify-content:space-around;align-items:center}
+.pb-item{display:flex;align-items:center;gap:12px}
+.pb-item .ic{width:38px;height:38px;background:var(--cr);border-radius:10px;display:grid;place-items:center;color:var(--bg);flex-shrink:0}
+.pb-item .ic svg{width:20px;height:20px}
+.pb-item .tx .l{font-family:var(--fh);font-size:13px;color:var(--ink);font-weight:700}
+.pb-item .tx .s{font-family:var(--fsa);font-size:10px;color:var(--im);letter-spacing:.5px;margin-top:1px;font-weight:400}
+.feats-wrap{padding:80px 24px;max-width:1200px;margin:0 auto}
+.feats-grid{display:grid;grid-template-columns:1fr;gap:22px;margin-top:50px}
+@media(min-width:680px){.feats-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:1000px){.feats-grid{grid-template-columns:repeat(3,1fr)}}
+.fcard{background:var(--paper);padding:30px 26px;border-radius:6px;box-shadow:var(--ss);border:1px solid rgba(139,38,53,.08);position:relative;overflow:hidden;transition:transform .4s ease,box-shadow .4s ease}
+.fcard:hover{transform:translateY(-4px);box-shadow:var(--sl)}
+.fcard::before{content:attr(data-num);position:absolute;top:-24px;left:-10px;font-family:var(--fs);font-style:italic;font-size:130px;color:var(--bg);opacity:.06;line-height:1;font-weight:900}
+.fcard .ic{width:42px;height:42px;color:var(--og);margin-bottom:12px}
+.fcard h4{font-family:var(--fd);font-size:22px;color:var(--bg);letter-spacing:-.5px;line-height:1.2;margin-bottom:4px}
+.fcard .en{font-family:var(--fs);font-style:italic;font-size:11px;color:var(--ol);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px}
+.fcard p{font-family:var(--fsa);font-size:13px;color:var(--is);line-height:1.7;font-weight:400}
+.fcard ul{list-style:none;padding:0;margin-top:10px}
+.fcard ul li{font-family:var(--fsa);font-size:12px;color:var(--is);padding:3px 14px 3px 0;position:relative;font-weight:300}
+.fcard ul li::before{content:"✦";position:absolute;right:0;color:var(--gd);font-size:9px;top:5px}
+.roadmap-wrap{max-width:880px;margin:40px auto 80px;padding:60px 40px;background:var(--paper);border:1px solid rgba(139,38,53,.12);border-radius:6px;box-shadow:var(--sl);position:relative}
+.roadmap-wrap::before,.roadmap-wrap::after{content:"";position:absolute;left:50%;transform:translateX(-50%);width:100px;height:2px;background:var(--gd);opacity:.5}
+.roadmap-wrap::before{top:30px}.roadmap-wrap::after{bottom:30px}
+.roadmap-list{list-style:none;padding:0;max-width:620px;margin:40px auto 0}
+.rm-item{position:relative;padding:22px 80px 22px 24px;background:var(--cr);border-radius:6px;margin-bottom:14px;border-right:5px solid var(--og);box-shadow:var(--sm);transition:transform .3s}
+.rm-item:hover{transform:translateX(-4px)}.rm-item:nth-child(2){border-right-color:var(--bg)}.rm-item:nth-child(3){border-right-color:var(--ol)}
+.rm-item::before{content:attr(data-p);position:absolute;top:18px;right:22px;font-family:var(--fd);font-size:34px;color:var(--bg);line-height:1}
+.rm-item h5{font-family:var(--fh);font-size:17px;color:var(--ink);font-weight:700;padding-right:34px;margin-bottom:4px}
+.rm-item .when{display:inline-block;margin-top:10px;margin-right:34px;padding:2px 10px;background:var(--pw);font-family:var(--fs);font-style:italic;font-size:11px;color:var(--im);border-radius:10px;letter-spacing:1px}
+.colophon{max-width:1360px;margin:30px auto 24px;padding:28px 36px;text-align:center;font-family:var(--fs);font-style:italic;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--if);border-top:1px dashed rgba(139,38,53,.25)}
+.colophon span{margin:0 12px}
+.colophon .dot{display:inline-block;width:3px;height:3px;background:var(--bg);border-radius:50%;margin:0 10px 3px;vertical-align:middle}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="masthead">
+  <span>שמור<i class="dot"></i>SHAMUR<i class="dot"></i>A DIGITAL JOURNAL</span>
+  <span>2026 · IOS · IPAD · PWA · VERCEL</span>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="folio l">I</div>
+  <div class="hero-inner">
+    <div>
+      <h1 class="hero-title">שמור</h1>
+      <div class="hero-latin">shamur</div>
+      <p class="hero-tagline">יומן דיגיטלי · <b>16 יכולות</b> · פלטות עונתיות · חנות מדבקות אינסופית · AI סטייליסט · סנכרון iOS · לוח משפחתי · ספר שנתי.</p>
+    </div>
+    <div class="hero-right">
+      <svg class="ha tl" viewBox="0 0 200 200"><g stroke="#6B7340" stroke-width="1.2" fill="none" stroke-linecap="round"><path d="M100 30 Q95 90 100 160"/><path d="M100 70 Q130 65 145 80"/><path d="M100 100 Q70 95 55 110"/></g><g fill="#8B2635"><circle cx="100" cy="30" r="7"/></g><g fill="#C4541C"><circle cx="145" cy="80" r="5"/></g><g fill="#D4A94A"><circle cx="55" cy="110" r="5"/></g></svg>
+      <div class="hero-icon-stage">
+        <div class="hero-icon">
+          <svg class="ft" viewBox="0 0 58 58" fill="none"><g fill="#8B2635"><circle cx="29" cy="18" r="7"/><circle cx="20" cy="26" r="5"/><circle cx="38" cy="26" r="5"/><circle cx="22" cy="34" r="5"/><circle cx="36" cy="34" r="5"/></g><circle cx="29" cy="27" r="4" fill="#D4A94A"/></svg>
+          <svg class="fb" viewBox="0 0 44 44" fill="none"><path d="M22 6 Q36 22 22 38 Q8 22 22 6 Z" fill="#6B7340" opacity="0.8"/><line x1="22" y1="6" x2="22" y2="38" stroke="#4A5230" stroke-width="0.9"/></svg>
+          <span class="char">ש</span>
+        </div>
+        <div class="hero-icon-caption">app icon · concept</div>
+      </div>
+      <svg class="ha br" viewBox="0 0 240 240"><g stroke="#6B7340" stroke-width="1.3" fill="none" stroke-linecap="round"><path d="M120 40 Q110 100 120 180"/><path d="M120 70 Q80 65 60 80"/><path d="M120 100 Q160 92 180 110"/><path d="M120 130 Q75 128 55 150"/></g><g fill="#C4541C"><circle cx="60" cy="80" r="6"/></g><g fill="#8B2635"><circle cx="180" cy="110" r="7"/></g><g fill="#D4A94A"><circle cx="55" cy="150" r="6"/></g><g fill="#6B7340" opacity="0.7"><ellipse cx="105" cy="120" rx="10" ry="4" transform="rotate(-30 105 120)"/><ellipse cx="140" cy="145" rx="12" ry="4" transform="rotate(25 140 145)"/></g></svg>
+    </div>
+  </div>
+  <div class="hero-scroll">~ הפכי את הדף ~</div>
+</section>
+
+<div class="divider-ornament"></div>
+<!-- II THREE SCREENS -->
+<section class="reveal">
+  <div class="folio l">II</div>
+  <div class="container">
+    <div class="section-hd">
+      <div class="section-roman">Monthly · Weekly · Daily</div>
+      <h2 class="section-ttl">שלושה <em>מסכים</em></h2>
+      <p class="section-sub">חודש → שבוע → יום. סנכרון מלא עם iPhone Calendar + Reminders.</p>
+    </div>
+    <div class="phones-row">
+      <div>
+        <div class="iphone"><div class="iphone-screen">
+          <div class="sb"><span>9:41</span></div>
+          <div class="scr-monthly-hdr"><div class="yr">2026</div><div class="nm">אפריל</div><div class="en">april</div></div>
+          <div class="scr-weekdays"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+          <div class="scr-cal">
+            <div class="cd prev"><span class="n">29</span></div><div class="cd prev"><span class="n">30</span></div><div class="cd prev"><span class="n">31</span></div>
+            <div class="cd"><span class="n">1</span></div><div class="cd"><span class="n">2</span><span class="ev pk">בלט</span></div><div class="cd"><span class="n">3</span><span class="dot"></span></div><div class="cd"><span class="n">4</span></div>
+            <div class="cd"><span class="n">5</span></div><div class="cd"><span class="n">6</span><span class="ev">יוגה</span></div><div class="cd"><span class="n">7</span></div><div class="cd"><span class="n">8</span><span class="ev bg">ישיבה</span></div><div class="cd"><span class="n">9</span><span class="ev pk">בלט</span></div><div class="cd"><span class="n">10</span></div><div class="cd"><span class="n">11</span></div>
+            <div class="cd"><span class="n">12</span></div><div class="cd"><span class="n">13</span><span class="ev nv">הורים</span></div><div class="cd"><span class="n">14</span><span class="ev">יוגה</span></div><div class="cd hol"><span class="n">15</span><span class="ev gd">♡ אמא</span></div><div class="cd"><span class="n">16</span><span class="ev pk">בלט</span></div><div class="cd today"><span class="n">17</span><span class="ev bg">היום</span></div><div class="cd"><span class="n">18</span><span class="ev og">טיול</span></div>
+            <div class="cd"><span class="n">19</span></div><div class="cd"><span class="n">20</span></div><div class="cd"><span class="n">21</span></div><div class="cd"><span class="n">22</span><span class="dot"></span></div><div class="cd hol"><span class="n">23</span><span class="ev gd">עצמאות</span></div><div class="cd"><span class="n">24</span></div><div class="cd"><span class="n">25</span></div>
+            <div class="cd"><span class="n">26</span></div><div class="cd"><span class="n">27</span><span class="ev">יוגה</span></div><div class="cd"><span class="n">28</span></div><div class="cd"><span class="n">29</span></div><div class="cd"><span class="n">30</span></div><div class="cd next"><span class="n">1</span></div><div class="cd next"><span class="n">2</span></div>
+          </div>
+          <div class="tab-bar">
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9h16M9 3v4M15 3v4"/></svg><span>שבוע</span></div>
+            <div class="tab active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 14h2M13 14h2M9 17h2M13 17h2"/></svg><span>חודש</span></div>
+            <div class="tab"><div class="fab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/></svg></div><span>יצירה</span></div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span>מדבקות</span></div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg><span>אני</span></div>
+          </div>
+        </div></div>
+        <div class="phone-caption"><span class="script">החודש בעין אחת</span><span class="sub">Monthly View</span></div>
+      </div>
+      <div>
+        <div class="iphone"><div class="iphone-screen">
+          <div class="sb"><span>9:41</span></div>
+          <div class="scr-wk-hdr"><div class="m">april 2026</div><div class="wk">השבוע</div><div class="wsub">let your soul sing</div></div>
+          <div class="scr-days">
+            <div class="dcard" data-d="13" data-w="mon"><span class="pin"></span><div class="dt">פגישת הורים — נועם</div><div class="dn"><span class="fam-dots"><i style="background:#D4A94A"></i></span>17:30 · בית הספר</div><span class="tag">חשוב</span></div>
+            <div class="dcard" data-d="14" data-w="tue"><div class="dt">יוגה + קפה עם מיכל</div><div class="dn"><span class="fam-dots"><i style="background:#8B2635"></i></span>בוקר של אוויר ♡</div></div>
+            <div class="dcard hi" data-d="15" data-w="wed"><div class="dt">יום הולדת אמא ♡</div><div class="dn">לקנות פרחים · להזמין מסעדה</div><span class="tag og">משפחה</span></div>
+            <div class="dcard" data-d="16" data-w="thu"><div class="dt">רומי — חוג בלט</div><div class="dn"><span class="fam-dots"><i style="background:#E5A590"></i></span>16:00 · לארוז תיק</div></div>
+            <div class="dcard we" data-d="17" data-w="fri"><span class="pin ol"></span><div class="dt">היום · הכנות שבת</div><div class="dn"><span class="fam-dots"><i style="background:#D4846A"></i><i style="background:#8B2635"></i></span>מאיה עוזרת.</div></div>
+            <div class="dcard we" data-d="18" data-w="sat"><div class="dt">טיול משפחתי</div><div class="dn">הגלבוע? צוקרמנייה ☼</div><span class="tag ol">משפחה</span></div>
+          </div>
+          <div class="tab-bar">
+            <div class="tab active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9h16M9 3v4M15 3v4"/></svg><span>שבוע</span></div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/></svg><span>חודש</span></div>
+            <div class="tab"><div class="fab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/></svg></div><span>יצירה</span></div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span>מדבקות</span></div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg><span>אני</span></div>
+          </div>
+        </div></div>
+        <div class="phone-caption"><span class="script">השבוע שלך</span><span class="sub">Weekly Spread</span></div>
+      </div>
+      <div>
+        <div class="iphone"><div class="iphone-screen">
+          <div class="sb"><span>9:41</span></div>
+          <div class="scr-daily-hdr"><div class="scr-daily-bg"></div><div class="scr-daily-date"><div class="n">17</div><div class="s">friday · april</div></div><div class="scr-daily-qt">"be happy. be bright. be you."</div></div>
+          <div class="scr-canvas">
+            <div style="position:relative;height:140px">
+              <div class="pola" style="position:absolute;top:4px;right:-2px;transform:rotate(-5deg)"><div class="pola-photo sunset"></div><div class="pola-cap">בוקר טוב ♡</div></div>
+              <div class="pola" style="position:absolute;top:24px;left:-4px;transform:rotate(6deg)"><div class="pola-photo floral"></div><div class="pola-cap">פרחים</div></div>
+            </div>
+            <div style="margin-top:14px"><span class="chip">תודה</span><span class="chip" style="transform:rotate(2deg);background:#EFE3CF">שמחה</span><span class="chip" style="transform:rotate(-3deg)">אור</span></div>
+            <div class="hnote">הבוקר קמתי לפני כולם. שתיתי קפה במרפסת, הרגשתי שאני נושמת באמת.</div>
+            <div class="mood-line"><span class="lbl">איך את מרגישה?</span><span class="mood-dot" style="background:#6B7340"></span><span class="mood-dot" style="background:#D4846A"></span><span class="mood-dot sel" style="background:#D4A94A"></span><span class="mood-dot" style="background:#E5A590"></span><span class="mood-dot" style="background:#2C3E50"></span></div>
+          </div>
+          <div class="tab-bar">
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9h16M9 3v4M15 3v4"/></svg><span>שבוע</span></div>
+            <div class="tab active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="4" width="14" height="16" rx="2"/><path d="M8 8h8M8 12h6M8 16h8"/></svg><span>יום</span></div>
+            <div class="tab"><div class="fab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/></svg></div><span>יצירה</span></div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span>מדבקות</span></div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg><span>אני</span></div>
+          </div>
+        </div></div>
+        <div class="phone-caption"><span class="script">הקנבס היומי</span><span class="sub">Daily Canvas</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider-ornament"></div>
+<!-- III STICKER SHOP + AI -->
+<section class="reveal">
+  <div class="folio r">III</div>
+  <div class="container">
+    <div class="section-hd">
+      <div class="section-roman">III · Stickers + AI Stylist</div>
+      <h2 class="section-ttl">חנות <em>המדבקות</em></h2>
+      <p class="section-sub">קטלוג אינסופי · חבילות עונתיות · בסיסיות חינם · פרימיום 12-20 ₪</p>
+    </div>
+    <div class="phones-row">
+      <div>
+        <div class="iphone"><div class="iphone-screen">
+          <div class="sb"><span>9:41</span></div>
+          <div class="scr-shop-hdr">
+            <div class="scr-shop-title">חנות מדבקות</div><div class="scr-shop-sub">sticker shop</div>
+            <div class="scr-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span>חפשי: פרחים, ווינטג', סתיו...</span></div>
+            <div class="scr-chips"><span class="scr-chip active">הכל</span><span class="scr-chip">סתיו</span><span class="scr-chip">פרחים</span><span class="scr-chip">ווינטג'</span><span class="scr-chip">אקוורל</span><span class="scr-chip">חמוד</span></div>
+          </div>
+          <div class="scr-shop-body">
+            <div class="pack-card">
+              <span class="tag">NEW · חבילה עונתית</span>
+              <div class="nm">Autumn Vibes</div><div class="en">sweater weather</div>
+              <div class="dm">42 מדבקות · אקוורל · שלכת, קפה, סוודרים</div>
+              <div class="preview-row">
+                <div class="prev"><svg viewBox="0 0 20 20" fill="#D4A94A"><path d="M10 2 L12 8 L18 8 L13 12 L15 18 L10 14 L5 18 L7 12 L2 8 L8 8 Z"/></svg></div>
+                <div class="prev"><svg viewBox="0 0 20 20"><ellipse cx="10" cy="10" rx="6" ry="4" fill="#C4541C"/></svg></div>
+                <div class="prev"><svg viewBox="0 0 20 20" fill="#8B2635"><circle cx="10" cy="10" r="5"/></svg></div>
+              </div>
+              <div class="price"><span class="p">₪14.90</span><span class="get">קבלי</span></div>
+            </div>
+            <div class="shop-section-h">פופולריות <span class="more">הכל ›</span></div>
+            <div class="stk-grid">
+              <div class="stk-cell owned"><svg viewBox="0 0 24 24"><g fill="#8B2635"><circle cx="12" cy="10" r="4"/><circle cx="8" cy="13" r="3"/><circle cx="16" cy="13" r="3"/></g><circle cx="12" cy="12" r="2" fill="#D4A94A"/></svg></div>
+              <div class="stk-cell owned"><svg viewBox="0 0 24 24" fill="none" stroke="#6B7340" stroke-width="1.5"><path d="M12 4 Q14 12 12 20 Q10 12 12 4 Z"/><path d="M12 8 L16 10 M12 12 L8 14"/></svg></div>
+              <div class="stk-cell"><svg viewBox="0 0 24 24"><path d="M12 4 C8 4 6 7 6 10 C6 14 9 16 12 20 C15 16 18 14 18 10 C18 7 16 4 12 4 Z" fill="#E88DA8"/></svg></div>
+              <div class="stk-cell premium"><svg viewBox="0 0 24 24" fill="#D4A94A"><path d="M12 3 L14.5 9 L21 9 L16 13 L18 20 L12 16 L6 20 L8 13 L3 9 L9.5 9 Z"/></svg></div>
+              <div class="stk-cell"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="14" rx="5" ry="4" fill="#C4541C"/><path d="M12 10 Q10 5 12 4 Q14 5 12 10" fill="#6B7340"/></svg></div>
+              <div class="stk-cell owned"><svg viewBox="0 0 24 24" fill="none" stroke="#8B2635" stroke-width="1.5"><path d="M6 12 Q12 4 18 12 Q12 20 6 12 Z"/><circle cx="12" cy="12" r="2" fill="#D4A94A"/></svg></div>
+              <div class="stk-cell premium"><svg viewBox="0 0 24 24"><path d="M8 6 L16 6 L16 10 Q16 18 12 20 Q8 18 8 10 Z" fill="#2C3E50"/><path d="M10 10 L14 10 L13 14 L11 14 Z" fill="#D4A94A"/></svg></div>
+              <div class="stk-cell"><svg viewBox="0 0 24 24"><path d="M12 4 C6 4 4 10 6 14 L12 20 L18 14 C20 10 18 4 12 4" fill="#B83A2E"/></svg></div>
+            </div>
+          </div>
+          <div class="tab-bar">
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9h16"/></svg><span>שבוע</span></div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/></svg><span>חודש</span></div>
+            <div class="tab"><div class="fab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/></svg></div><span>יצירה</span></div>
+            <div class="tab active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span>מדבקות</span></div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg><span>אני</span></div>
+          </div>
+        </div></div>
+        <div class="phone-caption"><span class="script">הקטלוג האינסופי</span><span class="sub">Sticker Catalog</span></div>
+      </div>
+      <div>
+        <div class="iphone"><div class="iphone-screen">
+          <div class="sb"><span>9:41</span></div>
+          <div class="scr-ai">
+            <div class="ai-hd"><div class="sparkle">✦  ·  ✦</div><div class="t">שמור מציעה</div><div class="s">personal stylist</div></div>
+            <div class="ai-input"><p>הבוקר קמתי לפני כולם ושתיתי קפה במרפסת. הרגשתי את האור הרך והצלצול הרחוק של האביב מתחיל.</p></div>
+            <div class="ai-analysis"><span class="ai-tag">מצב רוח: <b>שקט</b></span><span class="ai-tag">זמן: <b>בוקר</b></span><span class="ai-tag">עונה: <b>אביב</b></span><span class="ai-tag">אווירה: <b>רכה</b></span></div>
+            <div class="ai-suggest">
+              <div class="hl">מדבקות שמתאימות לטקסט הזה</div>
+              <div class="ai-stk-row">
+                <div class="ai-stk"><svg viewBox="0 0 24 24"><circle cx="8" cy="14" r="4" fill="#8B4513"/><ellipse cx="8" cy="10" rx="4" ry="2" fill="#F5EDE0"/></svg></div>
+                <div class="ai-stk"><svg viewBox="0 0 24 24" fill="#F4C542"><circle cx="12" cy="12" r="5"/></svg></div>
+                <div class="ai-stk"><svg viewBox="0 0 24 24"><g fill="#E88DA8"><circle cx="12" cy="10" r="3"/><circle cx="9" cy="12" r="2.5"/><circle cx="15" cy="12" r="2.5"/></g></svg></div>
+                <div class="ai-stk"><svg viewBox="0 0 24 24" fill="none" stroke="#7FA86B" stroke-width="1.5"><path d="M12 20 Q12 12 12 4"/><path d="M12 10 Q16 8 18 10"/></svg></div>
+                <div class="ai-stk"><svg viewBox="0 0 24 24"><path d="M6 10 L12 5 L18 10 L18 20 L6 20 Z" fill="#D4A94A"/><path d="M10 20 L10 14 L14 14 L14 20" fill="#8B2635"/></svg></div>
+                <div class="ai-stk"><svg viewBox="0 0 24 24" fill="#F07A5C"><path d="M12 4 L14 10 L20 10 L15 14 L17 20 L12 16 L7 20 L9 14 L4 10 L10 10 Z"/></svg></div>
+              </div>
+              <div class="ai-actions"><div class="ai-btn">הוסיפי את כולן</div><div class="ai-btn ghost">עוד הצעות</div></div>
+            </div>
+            <div class="ai-pack-sugg"><div class="icon">✿</div><div class="tx"><div class="n">Morning Light</div><div class="d">חבילה שלמה · 38 מדבקות</div></div><div class="pr">₪12.90</div></div>
+            <div class="ai-voice-cta"><div class="mic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11v1a7 7 0 0014 0v-1M12 19v3"/></svg></div><div class="tx"><div class="n">ספרי לי על היום שלך</div><div class="d">הקלטה בעברית · תמלול + הצעות</div></div></div>
+          </div>
+          <div class="tab-bar">
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9h16"/></svg><span>שבוע</span></div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="4" width="14" height="16" rx="2"/><path d="M8 8h8M8 12h6"/></svg><span>יום</span></div>
+            <div class="tab active"><div class="fab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 L13.5 8.5 L19 10 L13.5 11.5 L12 17 L10.5 11.5 L5 10 L10.5 8.5 Z"/></svg></div><span>✦ קסם</span></div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span>מדבקות</span></div>
+            <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg><span>אני</span></div>
+          </div>
+        </div></div>
+        <div class="phone-caption"><span class="script">הסטייליסט האישי שלך</span><span class="sub">AI Stylist</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider-ornament"></div>
+<!-- IV iPAD -->
+<section class="reveal">
+  <div class="folio l">IV</div>
+  <div class="container">
+    <div class="section-hd">
+      <div class="section-roman">IV · iPad Canvas</div>
+      <h2 class="section-ttl">הקנבס <em>על iPad</em></h2>
+      <p class="section-sub">גרירה · Apple Pencil · וואשי · שכבות · פולרואידים · AI Stylist.</p>
+    </div>
+  </div>
+  <div class="ipad-section-wrap">
+    <div class="ipad-frame"><div class="ipad-screen">
+      <div class="ipad-tools">
+        <div class="ipad-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 19l3-1 11-11-2-2L6 16l-1 3z"/></svg></div>
+        <div class="ipad-tool active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span class="badge"></span></div>
+        <div class="ipad-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 4 L20 10 L10 20 L4 20 L4 14 Z"/></svg></div>
+        <div class="ipad-tool"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 14l4-4 4 4 4-4 4 4"/></svg></div>
+        <div class="ipad-divider"></div>
+        <div class="ipad-swatch"><i style="background:#8B2635"></i><i style="background:#C4541C"></i><i style="background:#6B7340"></i><i style="background:#D4A94A"></i><i style="background:#2C3E50"></i></div>
+      </div>
+      <div class="ipad-main">
+        <div class="ipad-toolbar">
+          <div><div class="ipad-tb-title">יום שישי, 17 באפריל</div><div class="ipad-tb-sub">friday · bloom week</div></div>
+          <div class="ipad-tb-right"><span style="font-family:var(--fh);font-size:13px;color:var(--is)">שכבה 3 מתוך 5</span><span class="ipad-tb-btn">ביטול</span><span class="ipad-tb-btn primary">שתפי</span></div>
+        </div>
+        <div class="ipad-page">
+          <div class="ipad-page-grid">
+            <div class="ipad-journal">
+              <div class="ipad-jd">17</div><div class="ipad-jw">friday · april</div>
+              <div class="ipad-jb">הבוקר קמתי לפני כולם. שתיתי <span class="u">קפה</span> במרפסת, הרגשתי את האור הרך. רומי צחקה ב<span class="u">גן</span> הבוקר. מאיה עוזרת לי עם הכנות שבת — היא כבר גדולה.</div>
+              <div class="ipad-stk-row">
+                <div style="width:30px;height:30px;background:var(--paper);border-radius:6px;display:grid;place-items:center;box-shadow:var(--sm)"><svg viewBox="0 0 24 24" width="22" height="22"><circle cx="8" cy="14" r="4" fill="#8B4513"/><ellipse cx="8" cy="10" rx="4" ry="2" fill="#F5EDE0"/></svg></div>
+                <div style="width:30px;height:30px;background:var(--paper);border-radius:6px;display:grid;place-items:center;box-shadow:var(--sm)"><svg viewBox="0 0 24 24" width="22" height="22" fill="#F4C542"><circle cx="12" cy="12" r="5"/></svg></div>
+                <div style="width:30px;height:30px;background:var(--paper);border-radius:6px;display:grid;place-items:center;box-shadow:var(--sm)"><svg viewBox="0 0 24 24" width="22" height="22"><g fill="#E88DA8"><circle cx="12" cy="10" r="3"/><circle cx="9" cy="12" r="2.5"/><circle cx="15" cy="12" r="2.5"/></g></svg></div>
+              </div>
+            </div>
+            <div class="ipad-photos">
+              <div class="ipad-polaroid p1"><div class="photo"></div><div class="cap">בוקר</div></div>
+              <div class="ipad-polaroid p2"><div class="photo"></div><div class="cap">פרחים ♡</div></div>
+              <div class="ipad-polaroid p3"><div class="photo"></div><div class="cap">רומי</div></div>
+              <div class="ipad-washi"></div>
+            </div>
+          </div>
+          <svg class="pencil-cur" viewBox="0 0 24 24"><path d="M2 22 L6 16 L18 4 L20 6 L8 18 L2 22 Z" fill="#2C3E50"/><path d="M6 16 L8 18 L4 20 Z" fill="#D4A94A"/></svg>
+          <div class="ipad-ai-fab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 L13.5 8.5 L19 10 L13.5 11.5 L12 17 L10.5 11.5 L5 10 L10.5 8.5 Z"/></svg></div>
+        </div>
+      </div>
+    </div></div>
+    <div style="text-align:center;margin-top:30px">
+      <div style="font-family:var(--fsc);font-size:22px;color:var(--bg);transform:rotate(-1deg);display:inline-block">גררי, הניחי, תרצי — שמור זוכרת את הכל</div>
+      <div style="font-family:var(--fs);font-style:italic;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--ol);margin-top:6px">Apple Pencil · Layers · Drag & Drop · AI Assist</div>
+    </div>
+  </div>
+</section>
+<div class="divider-ornament"></div>
+
+<!-- V FAMILY -->
+<section class="reveal">
+  <div class="folio r">V</div>
+  <div class="container">
+    <div class="section-hd">
+      <div class="section-roman">V · Family</div>
+      <h2 class="section-ttl">משפחת <em>צוקרמנייה</em></h2>
+      <p class="section-sub">שישה בני משפחה, לוח אחד, צבע לכל אחד. חגים יהודיים. שיתוף סלקטיבי.</p>
+    </div>
+    <div class="family-members">
+      <div class="mb"><div class="mb-av adi">ע</div><div class="mb-nm">עדי</div><div class="mb-ag">the soul of the house</div></div>
+      <div class="mb"><div class="mb-av roei">ר</div><div class="mb-nm">רועי</div><div class="mb-ag">husband · hazmat expert</div></div>
+      <div class="mb"><div class="mb-av maya">מ</div><div class="mb-nm">מאיה</div><div class="mb-ag">eighteen · nearly flown</div></div>
+      <div class="mb"><div class="mb-av amit">ע</div><div class="mb-nm">עמית</div><div class="mb-ag">fourteen · curious</div></div>
+      <div class="mb"><div class="mb-av noam">נ</div><div class="mb-nm">נועם</div><div class="mb-ag">ten · wildly bright</div></div>
+      <div class="mb"><div class="mb-av romi">ר</div><div class="mb-nm">רומי</div><div class="mb-ag">five · the baby bloom</div></div>
+    </div>
+    <div class="family-brand">
+      <div class="n">צוקרמנייה</div><div class="en">zuckermania</div>
+      <div class="d">זה שם המשפחה לטיולים, לאירועים, לאוספי זיכרונות. שמור יודעת לזהות אירועים צוקרמנייתיים, לבנות מהם ספר שנתי, ולהציג "ביחד היינו" בסיום השנה.</div>
+      <a class="italy-link">איטליה · ספטמבר 2026 ←</a>
+    </div>
+    <div class="fcal">
+      <div class="fcal-hd"><div class="t">השבוע של כולם</div><div class="m">week of april 13 — 19</div></div>
+      <div class="fcal-body">
+        <div class="fcal-ev bg"><div class="d">13</div><div class="info"><div class="t"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gd);margin-left:6px"></span>נועם — פגישת הורים</div><div class="p">17:30</div></div><div class="time">17:30</div></div>
+        <div class="fcal-ev"><div class="d">14</div><div class="info"><div class="t"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#8B2635;margin-left:6px"></span>עדי · יוגה + קפה עם מיכל</div><div class="p">07:30</div></div><div class="time">07:30</div></div>
+        <div class="fcal-ev gd"><div class="d">15</div><div class="info"><div class="t"><span class="chip">משפחה</span>יום הולדת אמא ♡</div><div class="p">19:30</div></div><div class="time">19:30</div></div>
+        <div class="fcal-ev pk"><div class="d">16</div><div class="info"><div class="t"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#E5A590;margin-left:6px"></span>רומי — חוג בלט</div><div class="p">16:00</div></div><div class="time">16:00</div></div>
+        <div class="fcal-ev og"><div class="d">18</div><div class="info"><div class="t"><span class="chip">צוקרמנייה</span>טיול משפחתי — גלבוע</div><div class="p">08:00</div></div><div class="time">08:00</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider-ornament"></div>
+<!-- VI WORD OF WEEK -->
+<section class="reveal">
+  <div class="folio l">VI</div>
+  <div class="container">
+    <div class="section-hd">
+      <div class="section-roman">VI · Word of the Week</div>
+      <h2 class="section-ttl">מילה <em>אחת</em> לשבוע</h2>
+      <p class="section-sub">BLOOM, GROW, BRAVE, DREAM — מניעה את הצעות ה-AI: מדבקות, פלטה, ציטוטים.</p>
+    </div>
+  </div>
+  <div class="wotw-wrap">
+    <div class="wotw-stage">
+      <div class="wotw-kick">week 16 of 52</div>
+      <h3 class="wotw-word">BLOOM</h3>
+      <div class="wotw-hebrew">לפרוח</div>
+      <p class="wotw-desc">השבוע של הפריחה, של הצהוב והוורוד, של הצמיחה ללא חיפזון.</p>
+      <div class="wotw-intentions">
+        <span class="intent-chip">✿ לצאת 3 פעמים החוצה</span>
+        <span class="intent-chip">✿ להתקשר לאמא</span>
+        <span class="intent-chip">✿ שעה של קריאה לבד</span>
+        <span class="intent-chip">✿ תודה אחת ליום</span>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider-ornament"></div>
+
+<!-- VII MEMORIES -->
+<section class="reveal">
+  <div class="folio r">VII</div>
+  <div class="container">
+    <div class="section-hd">
+      <div class="section-roman">VII · Memories</div>
+      <h2 class="section-ttl">לפני שנה <em>ביום הזה</em></h2>
+      <p class="section-sub">"לפני שנה ביום הזה..." · חיפוש חופשי · כל המסע לאורך זמן.</p>
+    </div>
+  </div>
+  <div class="mem-wrap">
+    <div class="mem-grid">
+      <div class="mem-card">
+        <div class="mem-year">17 APRIL · 2025 · LAST YEAR</div>
+        <div class="mem-date">לפני שנה, ביום הזה</div>
+        <div>
+          <div class="mem-poloroid" style="transform:rotate(-3deg)"><div class="ph" style="background:linear-gradient(135deg,#7FA86B,#6B7340)"></div><div class="cap">פסח בגינה</div></div>
+          <div class="mem-poloroid" style="transform:rotate(4deg);margin-right:-20px"><div class="ph" style="background:linear-gradient(135deg,#D4846A,#8B2635)"></div><div class="cap">כולם יחד</div></div>
+        </div>
+        <p class="mem-note">"היום הראשון שרומי בת 4 דיברה במשפט של 10 מילים. עמית צחק, ומאיה צילמה. רועי עמד על האש ושר."</p>
+      </div>
+      <div class="mem-card">
+        <div class="mem-year">17 APRIL · 2023 · 3 YEARS AGO</div>
+        <div class="mem-date">לפני שלוש שנים</div>
+        <div>
+          <div class="mem-poloroid" style="transform:rotate(2deg)"><div class="ph" style="background:linear-gradient(135deg,#D4A94A,#C4541C)"></div><div class="cap">שקיעה</div></div>
+          <div class="mem-poloroid" style="transform:rotate(-5deg);margin-right:-16px"><div class="ph" style="background:linear-gradient(135deg,#2C3E50,#1E2A38)"></div><div class="cap">ערב ים</div></div>
+        </div>
+        <p class="mem-note">"זה היה הערב שלפני שעברנו דירה. ישבנו על החוף, רומי עוד לא הייתה."</p>
+      </div>
+    </div>
+    <div class="mem-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <span class="txt">חפשי בכל הזיכרונות שלך —</span>
+      <span class="hint">"ים", "רומי", "קיץ 2024"...</span>
+    </div>
+  </div>
+</section>
+<div class="divider-ornament"></div>
+
+<!-- VIII iOS -->
+<section class="reveal">
+  <div class="folio l">VIII</div>
+  <div class="container">
+    <div class="section-hd">
+      <div class="section-roman">VIII · iOS</div>
+      <h2 class="section-ttl">שמור <em>בלב המכשיר</em></h2>
+      <p class="section-sub">Widget · Siri Shortcuts · Share Sheet · Apple Pencil · Face ID.</p>
+    </div>
+  </div>
+  <div class="integ-wrap">
+    <div class="integ-grid">
+      <div class="integ-card">
+        <h4>Widget על מסך הבית</h4><div class="en">Home Screen Widget</div>
+        <p>מבט מהיר — מילת השבוע, אירועי היום, מצב הרוח האחרון. קטן, בינוני, גדול.</p>
+        <div class="widget-mock">
+          <div class="top"><span class="dt">friday · 17</span><span class="sz">medium</span></div>
+          <div class="wotw-mini">BLOOM</div>
+          <div class="events-mini"><div class="e"><span class="tm">16:00</span><span>רומי · בלט</span></div><div class="e"><span class="tm">19:00</span><span>הכנות שבת</span></div></div>
+        </div>
+      </div>
+      <div class="integ-card">
+        <h4>Siri Shortcuts</h4><div class="en">Voice Commands</div>
+        <p>"סירי, הוסיפי ליומן שאני שמחה היום". שמור לומדת קיצורים אישיים.</p>
+        <div class="siri-mock">
+          <div class="label">HEY SIRI</div>
+          <div class="cmd">"הוסיפי לשמור — שמחה היום, הילדים היו מתוקים"</div>
+          <div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+      <div class="integ-card">
+        <h4>Share Sheet</h4><div class="en">Share to Shamur</div>
+        <p>מכל אפליקציה — תמונה, ציטוט, קישור — שלחי ליומן בלחיצה אחת.</p>
+        <div class="share-mock">
+          <div class="h">Share with —</div>
+          <div class="apps">
+            <div class="app"><div class="ic shamur">ש</div><span class="lbl">שמור</span></div>
+            <div class="app"><div class="ic ig">IG</div><span class="lbl">Instagram</span></div>
+            <div class="app"><div class="ic wa"><svg viewBox="0 0 24 24" width="20" height="20" fill="#fff"><path d="M12 2a10 10 0 00-8.5 15.2L2 22l4.9-1.5A10 10 0 1012 2z"/></svg></div><span class="lbl">WhatsApp</span></div>
+            <div class="app"><div class="ic mail"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 7l9 7 9-7"/></svg></div><span class="lbl">Mail</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="divider-ornament"></div>
+<!-- IX YEAR BOOK -->
+<section class="reveal">
+  <div class="folio r">IX</div>
+  <div class="container">
+    <div class="section-hd">
+      <div class="section-roman">IX · Year Book</div>
+      <h2 class="section-ttl">הספר <em>השנתי</em></h2>
+      <p class="section-sub"><em>365 עמודים</em> בסוף השנה. PDF מוכן להדפסה או ספר קשיח ב-Artifact Uprising.</p>
+    </div>
+  </div>
+  <div class="yb-wrap">
+    <div class="book-stage">
+      <div class="book">
+        <div class="book-cover">
+          <svg class="book-ornament" viewBox="0 0 54 54" fill="none"><g stroke="#D4A94A" stroke-width="0.9"><circle cx="27" cy="27" r="20" fill="none"/><circle cx="27" cy="27" r="14" fill="none"/><path d="M27 7 L27 47 M7 27 L47 27"/></g><g fill="#D4A94A"><circle cx="27" cy="27" r="4"/></g></svg>
+          <div class="book-ed">volume one · first edition</div>
+          <h3 class="book-t">שמור</h3>
+          <div class="book-st">shamur</div>
+          <div style="height:30px"></div>
+          <div class="book-yr">2026</div>
+          <div class="book-nm">~ שנה של עדי ~</div>
+        </div>
+      </div>
+    </div>
+    <div class="yb-specs">
+      <div class="yb-spec"><div class="n">365</div><div class="l">עמודים · יום ליום</div></div>
+      <div class="yb-spec"><div class="n">52</div><div class="l">מילות השבוע</div></div>
+      <div class="yb-spec"><div class="n">12</div><div class="l">רוחות חודש</div></div>
+    </div>
+  </div>
+</section>
+<div class="divider-ornament"></div>
+
+<!-- X PRIVACY -->
+<section class="reveal">
+  <div class="folio l">X</div>
+  <div class="container">
+    <div class="section-hd">
+      <div class="section-roman">X · Privacy</div>
+      <h2 class="section-ttl">יומן זה <em>דבר אישי</em></h2>
+      <p class="section-sub">E2E מוצפן · Face ID · iCloud פרטי · שיתוף סלקטיבי בלבד.</p>
+    </div>
+    <div class="privacy-bar">
+      <div class="pb-item"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 11V7a4 4 0 118 0v4"/><rect x="5" y="11" width="14" height="10" rx="2"/></svg></div><div class="tx"><div class="l">Face ID</div><div class="s">נעול תמיד</div></div></div>
+      <div class="pb-item"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 L4 6v6c0 5 4 9 8 10 4-1 8-5 8-10V6l-8-4z"/><path d="M9 12l2 2 4-4"/></svg></div><div class="tx"><div class="l">הצפנה E2E</div><div class="s">End-to-End</div></div></div>
+      <div class="pb-item"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg></div><div class="tx"><div class="l">גיבוי פרטי</div><div class="s">iCloud · רק את</div></div></div>
+      <div class="pb-item"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg></div><div class="tx"><div class="l">תמיד מקומי</div><div class="s">בלי שרתים חיצוניים</div></div></div>
+    </div>
+  </div>
+</section>
+<div class="divider-ornament"></div>
+<!-- XI 16 CAPABILITIES -->
+<section class="reveal">
+  <div class="folio r">XI</div>
+  <div class="container">
+    <div class="section-hd">
+      <div class="section-roman">XI · Sixteen</div>
+      <h2 class="section-ttl">שש עשרה <em>יכולות</em></h2>
+    </div>
+  </div>
+  <div class="feats-wrap">
+    <div class="feats-grid">
+      <div class="fcard" data-num="01"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 14h2M13 14h2"/></svg><h4>שלושה מבטים</h4><div class="en">Monthly · Weekly · Daily</div><p>חודש, שבוע, יום — גמישות דיגיטלית מלאה.</p></div>
+      <div class="fcard" data-num="02"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 19l3-1 11-11-2-2L6 16l-1 3z"/></svg><h4>הקנבס החופשי</h4><div class="en">Free Canvas</div><p>גרירה, שכבות, Apple Pencil, וואשי, פולרואידים, סטיקרים. אין גבול.</p></div>
+      <div class="fcard" data-num="03"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><h4>חנות המדבקות</h4><div class="en">Sticker Shop</div><p>אלפי מדבקות. חבילות עונתיות, אקוורל, ווינטג'. חינם בסיסיות. פרימיום 12-20 ₪.</p><ul><li>חבילות חדשות כל שבוע</li><li>מנוי חודשי אופציונלי</li></ul></div>
+      <div class="fcard" data-num="04"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l2 5 5 1-4 4 1 6-4-3-4 3 1-6-4-4 5-1z"/></svg><h4>הסטייליסט האישי</h4><div class="en">AI Stylist</div><p>שמור קוראת מה שכתבת ומציעה מדבקות שמתאימות לרגש, לעונה, למצב רוח.</p></div>
+      <div class="fcard" data-num="05"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 9h16M9 3v4M15 3v4"/><path d="M15 13l-3 3-2-2"/></svg><h4>סנכרון iPhone</h4><div class="en">Calendar + Reminders</div><p>דו-כיווני. Calendar ו-Reminders בסנכרון מלא.</p></div>
+      <div class="fcard" data-num="06"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg><h4>לוח משפחתי</h4><div class="en">Family Calendar</div><p>צבע לכל אחד מששת בני המשפחה. חגים יהודיים. שיתוף סלקטיבי.</p></div>
+      <div class="fcard" data-num="07"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11v1a7 7 0 0014 0v-1M12 19v3"/></svg><h4>קול עם תמלול עברי</h4><div class="en">Voice + Hebrew Transcription</div><p>תמלול בעברית מדויקת. ההקלטה המקורית נשמרת.</p></div>
+      <div class="fcard" data-num="08"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21l-1.5-1.5C5 14.5 2 11.5 2 8a4.5 4.5 0 018-3 4.5 4.5 0 018 3c0 3.5-3 6.5-8.5 11.5z"/></svg><h4>מיינדפולנס יומיומי</h4><div class="en">Gratitude · Mood · Intentions</div><p>מצב רוח בלחיצה. תודות בשפה חופשית. כוונות חודשיות.</p></div>
+      <div class="fcard" data-num="09"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg><h4>זיכרונות</h4><div class="en">On This Day</div><p>"לפני שנה ביום הזה כתבת...". חיפוש חופשי בכל מה שיצרת.</p></div>
+      <div class="fcard" data-num="10"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/></svg><h4>הספר השנתי</h4><div class="en">Year Book PDF</div><p>365 עמודים בסוף השנה. מוכן ל-Artifact Uprising / Blurb.</p></div>
+      <div class="fcard" data-num="11"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 3 4 6 4 9s-1.5 6-4 9"/></svg><h4>אינטגרציית צוקרמנייה</h4><div class="en">Zuckermania Integration</div><p>כל טיול משפחתי. חיבור ל-Italy Trip App. ספר צוקרמנייה שנתי.</p></div>
+      <div class="fcard" data-num="12"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7"/><path d="M16 6l-4-4-4 4M12 2v14"/></svg><h4>שיתוף אלגנטי</h4><div class="en">Share Sheet</div><p>Instagram Stories מהטמפלייט. שליחה לבני משפחה. תמונת עמוד מוכן.</p></div>
+      <div class="fcard" data-num="13"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 11V7a4 4 0 118 0v4"/><rect x="5" y="11" width="14" height="10" rx="2"/></svg><h4>פרטיות מקצה לקצה</h4><div class="en">Privacy First</div><p>Face ID. הצפנה E2E. iCloud פרטי.</p></div>
+      <div class="fcard" data-num="14"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="14" rx="1"/><circle cx="12" cy="12" r="3"/></svg><h4>הגשר — צילום נייר</h4><div class="en">Capture Paper Pages</div><p>צלמי את היומן הקשיח. שמור שומרת, מזהה מילת שבוע, מציעה תגיות.</p></div>
+      <div class="fcard" data-num="15"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v8M12 14v8M4.93 4.93l5.66 5.66M13.41 13.41l5.66 5.66"/></svg><h4>מילת השבוע</h4><div class="en">Word of the Week</div><p>מילה אחת לשבוע. מניעה את כל ההצעות — מדבקות, פלטה, ציטוטים.</p></div>
+      <div class="fcard" data-num="16"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c0 4.5 3 7 3 9s-3 4.5-3 9"/></svg><h4>תמות עונתיות</h4><div class="en">Seasonal Themes</div><p>6 פלטות: סתיו, חורף, אביב, קיץ, נשמה, ווינטג'. מתחלפות אוטומטית.</p></div>
+    </div>
+  </div>
+</section>
+<div class="divider-ornament"></div>
+
+<!-- XII ROADMAP -->
+<section class="reveal">
+  <div class="folio l">XII</div>
+  <div class="container">
+    <div class="section-hd">
+      <div class="section-roman">XII · Roadmap</div>
+      <h2 class="section-ttl">מכאן <em>לאן</em></h2>
+      <p class="section-sub">שלוש פעימות בנייה · Next.js · Vercel · Vercel Postgres · PWA</p>
+    </div>
+    <div class="roadmap-wrap">
+      <ol class="roadmap-list">
+        <li class="rm-item" data-p="01"><h5>MVP · PWA · שלושת המבטים + לוח משפחתי + חנות בסיסית</h5><span class="when">6-8 שבועות · מאי-יולי 2026</span></li>
+        <li class="rm-item" data-p="02"><h5>AI Stylist · קול + תמלול · זיכרונות · ספר שנתי · פרימיום</h5><span class="when">8-10 שבועות · אוגוסט-נובמבר 2026</span></li>
+        <li class="rm-item" data-p="03"><h5>iOS Native · Widget · Siri · Pencil · Face ID · App Store</h5><span class="when">3-4 חודשים · דצמבר 2026 - מרץ 2027</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<div class="colophon">
+  <span>שמור · SHAMUR</span><i class="dot"></i>
+  <span>2026</span>
+</div>
+
+</div>
+<script>
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add("visible");io.unobserve(x.target)}}),{threshold:.08,rootMargin:"0px 0px -40px 0px"});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
