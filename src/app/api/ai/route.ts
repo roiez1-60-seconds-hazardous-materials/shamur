@@ -1,100 +1,132 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const STICKER_IDS = [
-  'b01','b02','b03','b04','b05','b06','b07','b08','b09','b10','b11','b12',
-  'b13','b14','b15','b16','b17',
-  'w01','w02','w03','w04',
-  's01','s02','s03','s04','s05','s06','s07',
-  'sp01','sp02','sp03',
-  'm01','m02','m03','m04','m05','m06',
-  'f01','f02','f03',
-  'fd01','fd02','fd03','fd04',
-  'v01','v02','v03','v04','v05',
-  't01','t02','t03','t04',
-  'w05','w06',
+const STICKER_RULES: Record<string, string[]> = {
+  'פרח|ורד|פריחה|גן|גינה': ['b01','b05','b11','x01','x03'],
+  'עץ|ענף|שרך|עלה|ירוק': ['b06','b07','b10','x07'],
+  'שמש|בוקר|אור|זריחה': ['x18','b08','sp03'],
+  'לילה|ירח|כוכב|שקט': ['m05','w05','w06','x21'],
+  'ילד|ילדה|רומי|נועם|עמית|מאיה|ילדים': ['f01','f03','m01'],
+  'בית|משפחה|ביחד|יחד': ['f01','f03'],
+  'שמח|שמחה|טוב|נהדר|מצוין': ['m02','x18','sp03'],
+  'אהב|אהבה|לב|חיבוק': ['m01','m03','m06'],
+  'תודה|ברכה|גאה': ['m03','x22','x23'],
+  'עצוב|קשה|בכי|כאב': ['m05','s06','x13'],
+  'קפה|תה|שתיתי': ['s05','fd04','x12'],
+  'שבת|חלה|קידוש|יין': ['fd02','fd03','s06'],
+  'טיול|נסיעה|איטליה|חופשה': ['t01','t02','t03','t04'],
+  'סתיו|חורף|קר': ['s01','s02','s04','x25'],
+  'אביב|פריחה|ריח': ['sp01','sp02','sp03','b03'],
+  'קיץ|חוף|ים|חם': ['x18','x24','fd01'],
+};
+
+const PALETTES: Record<string, string[]> = {
+  happy: ['#E88DA8','#D4A94A','#8FA880','#F4C2C2'],
+  calm:  ['#9BA87D','#D4A94A','#E8DCC8','#C4CDD4'],
+  cozy:  ['#C4541C','#D4A94A','#8B2635','#F5EDE0'],
+  sad:   ['#2C3E50','#A8B5C2','#9BA87D','#D4C9A8'],
+  love:  ['#8B2635','#E88DA8','#D4A94A','#F4C2C2'],
+  nature:['#6B7340','#9BA87D','#D4A94A','#8FA880'],
+};
+
+const QUOTES = [
+  'כל יום הוא דף חדש לכתוב.',
+  'את חזקה יותר ממה שאת חושבת.',
+  'רגעים קטנים הם הדברים הגדולים.',
+  'הלב יודע את הדרך — תסמכי עליו.',
+  'כל שקיעה מבטיחה זריחה.',
+  'לפרוח אפשר בכל גיל ובכל עונה.',
+  'האהבה הכי חשובה היא לעצמך.',
+  'גם צעד קטן הוא קדימה.',
+  'היי עדינה עם עצמך — את עושה כמיטב יכולתך.',
+  'כוחה של אישה הוא בשקטה.',
 ];
+
+function ruleBased(text: string) {
+  const scores: Record<string, number> = {};
+  for (const [pat, ids] of Object.entries(STICKER_RULES)) {
+    if (new RegExp(pat, 'u').test(text)) {
+      ids.forEach(id => { scores[id] = (scores[id] || 0) + 1; });
+    }
+  }
+  const sorted = Object.entries(scores).sort((a,b)=>b[1]-a[1]).map(([id])=>id);
+  const defaults = ['b01','m01','b05','s05','b08','m02','x18','b03'];
+  const stickers = [...new Set([...sorted, ...defaults])].slice(0,6);
+
+  let paletteKey = 'calm', mood = '🌸', intent = 'רגע של שקט';
+  if (/שמח|טוב|מאושר/.test(text)) { paletteKey='happy'; mood='😄'; intent='שמחה ואור'; }
+  else if (/אהב|אהבה|לב/.test(text)) { paletteKey='love'; mood='❤️'; intent='אהבה וחום'; }
+  else if (/עצוב|קשה|בכי/.test(text)) { paletteKey='sad'; mood='🌧'; intent='רגע קשה'; }
+  else if (/קפה|שבת|חם|נוח/.test(text)) { paletteKey='cozy'; mood='☕'; intent='נוחות וחמימות'; }
+  else if (/גן|פרח|טבע/.test(text)) { paletteKey='nature'; mood='🌿'; intent='קשר לטבע'; }
+
+  return {
+    stickers,
+    palette: PALETTES[paletteKey],
+    quote: QUOTES[Math.floor(Math.random() * QUOTES.length)],
+    mood,
+    intent,
+  };
+}
 
 export async function POST(req: NextRequest) {
   const { text } = await req.json();
-  if (!text?.trim()) {
-    return NextResponse.json({ error: 'No text provided' }, { status: 400 });
-  }
+  if (!text?.trim()) return NextResponse.json(ruleBased(''));
 
-  const prompt = `You are a personal journal stylist AI called "שמור" (Shamur).
-Analyze this Hebrew/English journal entry and return a JSON object.
+  const apiKey = process.env.ANTHROPIC_API_KEY;
 
-Entry: "${text}"
+  // ── WITH CLAUDE (professional) ────────────────────────
+  if (apiKey) {
+    try {
+      const allIds = [...new Set(Object.values(STICKER_RULES).flat())].join(', ');
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+        },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 400,
+          messages: [{
+            role: 'user',
+            content: `You are Shamur, a personal Hebrew journal AI stylist.
+Analyze this Hebrew journal entry and return ONLY valid JSON:
 
-Return ONLY valid JSON, no markdown, no explanation:
+"${text.slice(0, 300)}"
+
+Return:
 {
-  "stickers": [array of 6 sticker IDs from this list that best match the mood/content: ${STICKER_IDS.join(',')}],
-  "palette": [array of 4 hex colors that match the emotional tone],
-  "quote": "a short inspirational Hebrew or English quote matching the mood (max 15 words)",
-  "mood": "single emoji representing the emotional state",
-  "intent": "2-3 words in Hebrew describing the feeling/theme"
+  "stickers": [6 IDs from: ${allIds}],
+  "palette": [4 hex colors matching emotional tone],
+  "quote": "short inspirational Hebrew quote max 12 words",
+  "mood": "single emoji",
+  "intent": "2-3 Hebrew words describing the feeling"
 }
 
-Rules:
-- Pick stickers that match the EMOTIONS and CONTENT (nature words → botanical, sad → moon/candle, happy → sunshine/rainbow, family → house/puzzle, food/shabbat → bread/wine/tea)
-- Autumn palette for melancholy/cozy, Spring for happy/hopeful, warm for love/family
-- Quote should be warm and personal, in Hebrew or English
-- mood emoji should be specific (not just 😊)`;
+Match stickers to the EMOTIONAL CONTENT (flowers=nature/calm, heart=love, moon=tired/night, sun=happy, coffee=cozy, etc).
+Return ONLY the JSON object, nothing else.`,
+          }],
+        }),
+      });
 
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 500,
-        messages: [{ role: 'user', content: prompt }],
-      }),
-    });
-
-    const data = await response.json();
-    const raw = data.content?.[0]?.text || '';
-
-    // Parse JSON from response
-    const jsonMatch = raw.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) throw new Error('No JSON in response');
-
-    const result = JSON.parse(jsonMatch[0]);
-
-    // Validate sticker IDs
-    if (result.stickers) {
-      result.stickers = result.stickers.filter((id: string) => STICKER_IDS.includes(id)).slice(0, 8);
+      const data = await res.json();
+      const raw = data.content?.[0]?.text || '';
+      const match = raw.match(/\{[\s\S]*\}/);
+      if (match) {
+        const result = JSON.parse(match[0]);
+        const allValidIds = [...new Set(Object.values(STICKER_RULES).flat())];
+        result.stickers = (result.stickers || [])
+          .filter((id: string) => allValidIds.includes(id) || id.match(/^[bwsmftxv]\d+$/))
+          .slice(0, 6);
+        if (result.stickers.length < 3) throw new Error('too few stickers');
+        return NextResponse.json(result);
+      }
+    } catch (e) {
+      // fallback below
     }
-
-    return NextResponse.json(result);
-  } catch (e) {
-    // Fallback: rule-based suggestion if API fails
-    const fallback = getFallbackSuggestion(text);
-    return NextResponse.json(fallback);
-  }
-}
-
-function getFallbackSuggestion(text: string) {
-  const lower = text.toLowerCase();
-  
-  const stickers: string[] = [];
-  if (lower.includes('פרח') || lower.includes('גן') || lower.includes('טבע') || lower.includes('בוקר')) stickers.push('b01', 'b05', 'b07');
-  if (lower.includes('קפה') || lower.includes('חם') || lower.includes('בית')) stickers.push('fd04', 's05');
-  if (lower.includes('ילד') || lower.includes('רומי') || lower.includes('מאיה') || lower.includes('משפח')) stickers.push('f01', 'f02', 'm01');
-  if (lower.includes('שבת') || lower.includes('חלה') || lower.includes('יין')) stickers.push('fd02', 'fd03');
-  if (lower.includes('עצוב') || lower.includes('קשה') || lower.includes('עייפ')) stickers.push('m05', 's06');
-  if (lower.includes('שמח') || lower.includes('אהב') || lower.includes('טוב')) stickers.push('m01', 'm02', 'sp03');
-  if (lower.includes('טיול') || lower.includes('איטליה') || lower.includes('נסיע')) stickers.push('t01', 't02', 't03');
-  
-  while (stickers.length < 6) {
-    const random = STICKER_IDS[Math.floor(Math.random() * 20)];
-    if (!stickers.includes(random)) stickers.push(random);
   }
 
-  return {
-    stickers: stickers.slice(0, 6),
-    palette: ['#E88DA8', '#D4A94A', '#8FA880', '#C4541C'],
-    quote: 'כל יום הוא דף חדש לכתוב.',
-    mood: '🌸',
-    intent: 'רגע של שקט',
-  };
+  // ── RULE-BASED FALLBACK ───────────────────────────────
+  return NextResponse.json(ruleBased(text));
 }
