@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+@theme {
+  /* Shamur color palette */
+  --color-shamur-paper: #FAF5EB;
+  --color-shamur-paper-warm: #F7EFDF;
+  --color-shamur-cream: #F5EDE0;
+  --color-shamur-cream-warm: #EFE3CF;
+  --color-shamur-cream-dark: #E8DCC8;
+  --color-shamur-ink: #1A1410;
+  --color-shamur-soft: #3D2E20;
+  --color-shamur-muted: #6B5B4E;
+  --color-shamur-faded: #A09080;
+  --color-shamur-bg: #8B2635;
+  --color-shamur-rust: #C4541C;
+  --color-shamur-olive: #6B7340;
+  --color-shamur-gold: #D4A94A;
+  --color-shamur-navy: #2C3E50;
+  --color-shamur-pink: #E88DA8;
+  --color-shamur-blush: #F4C2C2;
+
+  /* Fonts */
+  --font-display: "Suez One", serif;
+  --font-serif: "Playfair Display", serif;
+  --font-script: "Caveat", cursive;
+  --font-sans: "Heebo", sans-serif;
+  --font-italic: "Cormorant Garamond", serif;
+  --font-cardo: "Cardo", serif;
+}
+
+:root {
+  --shamur-paper: #FAF5EB;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  direction: rtl;
+}
+
+body {
+  font-family: "Heebo", "Frank Ruhl Libre", sans-serif;
+  background: #FAF5EB;
+  color: #1A1410;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Grain overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.25;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3 0 0 0 0 0.18 0 0 0 0 0.08 0 0 0 0.2 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 200px 200px;
+}
+
+#__next, main {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Scrollbar hide */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Safe area */
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 8px);
+}
+
+/* Font variables for inline styles */
+:root {
+  --font-display: "Suez One", "Frank Ruhl Libre", serif;
+  --font-serif: "Playfair Display", serif;
+  --font-script: "Caveat", cursive;
+  --font-sans: "Heebo", sans-serif;
+  --font-italic: "Cormorant Garamond", serif;
+  --font-cardo: "Cardo", serif;
+}
+
+/* Utility classes for fonts */
+.font-display { font-family: var(--font-display) !important; }
+.font-serif   { font-family: var(--font-serif) !important; }
+.font-script  { font-family: var(--font-script) !important; }
+.font-italic  { font-family: var(--font-italic); font-style: italic; }
+.font-cardo   { font-family: var(--font-cardo) !important; }
+
+/* Line-height for lined journal paper */
+.lined-bg {
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 27px,
+    rgba(139, 38, 53, 0.05) 27px,
+    rgba(139, 38, 53, 0.05) 28px
+  );
+}
