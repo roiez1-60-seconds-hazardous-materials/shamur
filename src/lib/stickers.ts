@@ -263,3 +263,110 @@ export function searchStickers(query: string): Sticker[] {
     )
   );
 }
+
+// ── ADDITIONAL 25 STICKERS ──────────────────────────────
+export const EXTRA_STICKERS: Sticker[] = [
+  {
+    id: 'x01', name: 'Cherry Blossom', nameHe: 'דובדבן פורח', category: 'botanical', free: true, tags: ['cherry', 'spring', 'japan', 'pink'],
+    svg: `<svg viewBox="0 0 60 60" fill="none"><path d="M30 50 L30 28" stroke="#8B5E3C" stroke-width="2.5"/><path d="M30 38 Q22 34 16 36" stroke="#8B5E3C" stroke-width="1.5" fill="none"/><path d="M30 32 Q38 28 44 30" stroke="#8B5E3C" stroke-width="1.5" fill="none"/><g fill="#F4C2C2">${Array.from({length:5},(_,i)=>{const a=i*72*Math.PI/180;return `<ellipse cx="${18+14*Math.cos(a)}" cy="${16+10*Math.sin(a)}" rx="5" ry="7" transform="rotate(${i*72} ${18+14*Math.cos(a)} ${16+10*Math.sin(a)})" fill="#F4C2C2"/>`}).join('')}</g><circle cx="18" cy="16" r="3" fill="#D4A94A"/><g fill="#E88DA8">${Array.from({length:5},(_,i)=>{const a=i*72*Math.PI/180;return `<ellipse cx="${42+12*Math.cos(a)}" cy="${24+9*Math.sin(a)}" rx="4" ry="6" transform="rotate(${i*72} ${42+12*Math.cos(a)} ${24+9*Math.sin(a)})" fill="#E88DA8"/>`}).join('')}</g><circle cx="42" cy="24" r="2.5" fill="#D4A94A"/></svg>`
+  },
+  {
+    id: 'x02', name: 'Hydrangea', nameHe: 'הורטנזיה', category: 'botanical', free: true, tags: ['flower', 'blue', 'garden'],
+    svg: `<svg viewBox="0 0 60 60" fill="none">${Array.from({length:9},(_,i)=>{const a=i*40*Math.PI/180;const r=i<3?6:i<6?14:20;const x=30+r*Math.cos(a);const y=28+r*Math.sin(a);return `<circle cx="${x}" cy="${y}" r="5" fill="${i%3===0?'#7A8DC4':i%3===1?'#9BA8D4':'#B5BEE0'}"/><circle cx="${x}" cy="${y}" r="2" fill="#FAF5EB" opacity="0.6"/>`;}).join('')}</svg>`
+  },
+  {
+    id: 'x03', name: 'Peony', nameHe: 'פיאוניה', category: 'botanical', free: true, tags: ['flower', 'pink', 'luxury'],
+    svg: `<svg viewBox="0 0 60 60" fill="none">${Array.from({length:5},(_,i)=>{const a=i*72*Math.PI/180;const x=30+10*Math.cos(a);const y=28+10*Math.sin(a);return `<circle cx="${x}" cy="${y}" r="9" fill="#D4728E" opacity="0.85"/>`;}).join('')}<circle cx="30" cy="28" r="10" fill="#E88DA8"/>${Array.from({length:5},(_,i)=>{const a=i*72*Math.PI/180;const x=30+5*Math.cos(a);const y=28+5*Math.sin(a);return `<circle cx="${x}" cy="${y}" r="5" fill="#F4C2C2"/>`;}).join('')}<circle cx="30" cy="28" r="4" fill="#FAF5EB"/><path d="M30 40 L30 54" stroke="#6B7340" stroke-width="2.5"/></svg>`
+  },
+  {
+    id: 'x04', name: 'Iris', nameHe: 'אירוס', category: 'botanical', free: true, tags: ['flower', 'purple', 'israel', 'iris'],
+    svg: `<svg viewBox="0 0 60 60" fill="none"><path d="M30 34 Q20 28 16 18 Q20 12 26 16 Q28 22 30 26 Q32 22 34 16 Q40 12 44 18 Q40 28 30 34Z" fill="#7A5C9B"/><path d="M30 34 Q18 36 14 30 Q12 24 18 22 Q24 24 28 30 Q32 24 42 22 Q48 24 46 30 Q42 36 30 34Z" fill="#9B7DC4"/><circle cx="30" cy="30" r="4" fill="#D4A94A"/><path d="M30 34 L30 52" stroke="#6B7340" stroke-width="2.5"/></svg>`
+  },
+  {
+    id: 'x05', name: 'Morning Glory', nameHe: 'נבעת הבוקר', category: 'botanical', free: true, tags: ['flower', 'morning', 'blue', 'vine'],
+    svg: `<svg viewBox="0 0 60 60" fill="none"><path d="M10 50 Q14 40 22 36 Q30 32 38 36 Q46 40 50 50" stroke="#6B7340" stroke-width="1.5" fill="none"/><path d="M22 36 Q18 28 20 20 Q24 14 30 16 Q36 14 40 20 Q42 28 38 36" stroke="#7A8DC4" stroke-width="1" fill="none"/><path d="M30 34 Q22 28 20 20 Q24 12 30 14 Q36 12 40 20 Q38 28 30 34Z" fill="#7A8DC4" opacity="0.85"/><circle cx="30" cy="24" r="5" fill="#FAF5EB"/><circle cx="30" cy="24" r="2.5" fill="#D4A94A"/></svg>`
+  },
+  {
+    id: 'x06', name: 'Wisteria', nameHe: 'וויסטריה', category: 'botanical', free: true, tags: ['flower', 'purple', 'hanging', 'spring'],
+    svg: `<svg viewBox="0 0 60 60" fill="none"><path d="M8 10 Q20 8 32 12 Q44 8 52 10" stroke="#6B4426" stroke-width="2" fill="none"/><path d="M20 10 Q22 18 20 26 Q18 34 20 42" stroke="#6B4426" stroke-width="1.5" fill="none"/><path d="M32 12 Q34 20 32 30 Q30 38 32 46" stroke="#6B4426" stroke-width="1.5" fill="none"/>${Array.from({length:12},(_,i)=>{const x=14+i*3;const y=18+i*2.5+(i%2===0?0:4);return `<circle cx="${x}" cy="${y}" r="3" fill="${i%3===0?'#A899B5':i%3===1?'#C4B5D4':'#8B7A9B'}" opacity="0.85"/>`;}).join('')}</svg>`
+  },
+  {
+    id: 'x07', name: 'Pine Branch', nameHe: 'ענף אורן', category: 'botanical', free: true, season: 'winter', tags: ['pine', 'winter', 'green', 'forest'],
+    svg: `<svg viewBox="0 0 60 60" fill="none"><path d="M10 46 Q20 36 30 26 Q40 16 50 10" stroke="#5A6330" stroke-width="2.5" stroke-linecap="round" fill="none"/>${Array.from({length:7},(_,i)=>{const t=i/6;const px=10+40*t;const py=46-36*t;const off=i%2===0?1:-1;return `<path d="M${px} ${py} Q${px+off*8} ${py-4} ${px+off*14} ${py-8}" stroke="#6B7340" stroke-width="2" fill="none"/><ellipse cx="${px+off*14}" cy="${py-8}" rx="3" ry="4" fill="#8FA880" transform="rotate(${off*20} ${px+off*14} ${py-8})"/>`;}).join('')}</svg>`
+  },
+  {
+    id: 'x08', name: 'Berries', nameHe: 'פירות יער', category: 'botanical', free: true, season: 'autumn', tags: ['berries', 'autumn', 'red', 'wild'],
+    svg: `<svg viewBox="0 0 60 60" fill="none"><path d="M30 52 Q20 44 14 36 Q10 28 14 20 Q18 12 24 14 Q28 16 30 20" stroke="#6B7340" stroke-width="1.5" fill="none"/><path d="M30 52 Q40 44 46 36 Q50 28 46 20 Q42 12 36 14 Q32 16 30 20" stroke="#6B7340" stroke-width="1.5" fill="none"/><circle cx="16" cy="22" r="5" fill="#8B2635"/><circle cx="12" cy="30" r="5" fill="#9B2E24"/><circle cx="18" cy="38" r="5" fill="#8B2635"/><circle cx="44" cy="22" r="5" fill="#9B2E24"/><circle cx="48" cy="30" r="5" fill="#8B2635"/><circle cx="42" cy="38" r="5" fill="#9B2E24"/><circle cx="30" cy="44" r="5" fill="#8B2635"/><circle cx="16" cy="22" r="1.5" fill="#FAF5EB" opacity="0.5"/><circle cx="44" cy="22" r="1.5" fill="#FAF5EB" opacity="0.5"/></svg>`
+  },
+  {
+    id: 'x09', name: 'Lemon', nameHe: 'לימון', category: 'food', free: true, tags: ['lemon', 'fresh', 'summer', 'food'],
+    svg: `<svg viewBox="0 0 60 60" fill="none"><ellipse cx="30" cy="32" rx="18" ry="16" fill="#F4C542"/><ellipse cx="30" cy="32" rx="18" ry="16" fill="none" stroke="#D4A94A" stroke-width="1.5"/><path d="M30 16 Q26 10 22 8" stroke="#6B7340" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M30 16 Q28 8 30 6" stroke="#6B7340" stroke-width="1.5" fill="none" stroke-linecap="round"/><ellipse cx="14" cy="32" rx="5" ry="8" fill="#F0B830" opacity="0.4"/><path d="M30 24 L30 40 M18 32 L42 32 M21 27 L39 37 M21 37 L39 27" stroke="#F0B830" stroke-width="1" opacity="0.5"/></svg>`
+  },
+  {
+    id: 'x10', name: 'Honey Jar', nameHe: 'צנצנת דבש', category: 'food', free: true, tags: ['honey', 'sweet', 'autumn', 'rosh hashana'],
+    svg: `<svg viewBox="0 0 60 60" fill="none"><rect x="16" y="24" width="28" height="26" rx="6" fill="#D4A94A"/><ellipse cx="30" cy="24" rx="14" ry="6" fill="#C49040"/><rect x="22" y="16" width="16" height="10" rx="5" fill="#D4A94A"/><rect x="22" y="16" width="16" height="4" rx="2" fill="#C49040"/><path d="M22 36 Q30 32 38 36 Q30 44 22 36Z" fill="#B8860B" opacity="0.4"/></svg>`
+  },
+  {
+    id: 'x11', name: 'Apple', nameHe: 'תפוח', category: 'food', free: true, tags: ['apple', 'rosh hashana', 'fruit', 'red'],
+    svg: `<svg viewBox="0 0 60 60" fill="none"><path d="M30 18 Q18 16 14 28 Q10 40 20 50 Q26 56 30 52 Q34 56 40 50 Q50 40 46 28 Q42 16 30 18Z" fill="#C4381C"/><path d="M30 18 Q34 10 38 8" stroke="#6B4426" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M32 8 Q38 6 40 10" stroke="#6B7340" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M16 28 Q18 24 24 22" stroke="#B83015" stroke-width="1.5" fill="none" opacity="0.5"/></svg>`
+  },
+  {
+    id: 'x12', name: 'Croissant', nameHe: 'קרואסון', category: 'food', free: true, tags: ['croissant', 'morning', 'breakfast', 'france'],
+    svg: `<svg viewBox="0 0 60 60" fill="none"><path d="M10 36 Q14 22 30 18 Q46 22 50 36 Q46 44 38 42 Q30 46 22 42 Q14 44 10 36Z" fill="#D4A94A"/><path d="M10 36 Q14 28 24 26 Q30 24 36 26 Q46 28 50 36" stroke="#B8860B" stroke-width="1.5" fill="none"/><path d="M18 40 Q24 36 30 38 Q36 36 42 40" stroke="#C49040" stroke-width="1" fill="none" opacity="0.6"/></svg>`
+  },
+  {
+    id: 'x13', name: 'Feather', nameHe: 'נוצה', category: 'vintage', free: true, tags: ['feather', 'write', 'vintage', 'pen'],
+    svg: `<svg viewBox="0 0 60 60" fill="none"><path d="M14 48 Q22 40 30 30 Q40 18 48 10" stroke="#6B5B4E" stroke-width="1.5" fill="none"/><path d="M48 10 Q42 16 36 24 Q28 34 20 46 Q22 40 30 32 Q38 22 46 12 Z" fill="#E8DCC8"/><path d="M46 12 Q38 20 32 28 Q26 36 22 44" stroke="#D4C9A8" stroke-width="1" fill="none" opacity="0.6"/><path d="M14 48 L18 52" stroke="#6B5B4E" stroke-width="1.5" stroke-linecap="round"/></svg>`
+  },
+  {
+    id: 'x14', name: 'Compass', nameHe: 'מצפן', category: 'travel', free: true, tags: ['compass', 'adventure', 'direction', 'travel'],
+    svg: `<svg viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="20" stroke="#D4A94A" stroke-width="2" fill="#FAF5EB"/><circle cx="30" cy="30" r="18" stroke="#E8DCC8" stroke-width="1" fill="none"/><path d="M30 14 L32 28 L30 30 L28 28 Z" fill="#8B2635"/><path d="M30 46 L32 32 L30 30 L28 32 Z" fill="#3D2E20"/><path d="M14 30 L28 32 L30 30 L28 28 Z" fill="#3D2E20"/><path d="M46 30 L32 28 L30 30 L32 32 Z" fill="#3D2E20"/><circle cx="30" cy="30" r="3" fill="#D4A94A"/><text x="30" y="12" text-anchor="middle" font-size="7" fill="#6B5B4E" font-family="serif">N</text></svg>`
+  },
+  {
+    id: 'x15', name: 'Ticket', nameHe: 'כרטיס', category: 'travel', free: true, tags: ['ticket', 'travel', 'adventure', 'memory'],
+    svg: `<svg viewBox="0 0 60 60" fill="none"><rect x="6" y="18" width="48" height="26" rx="4" fill="#F5EDE0"/><circle cx="6" cy="31" r="5" fill="#FAF5EB"/><circle cx="54" cy="31" r="5" fill="#FAF5EB"/><path d="M18" stroke="#E8DCC8" stroke-width="1" stroke-dasharray="3 3"/><line x1="20" y1="20" x2="20" y2="42" stroke="#E8DCC8" stroke-width="1" stroke-dasharray="4 3"/><text x="36" y="29" text-anchor="middle" font-size="8" fill="#8B2635" font-family="serif" font-style="italic">ADMIT ONE</text><text x="36" y="39" text-anchor="middle" font-size="10" fill="#3D2E20" font-family="serif">✦ 2026 ✦</text></svg>`
+  },
+  {
+    id: 'x16', name: 'Ship Wheel', nameHe: 'גלגל ספינה', category: 'vintage', free: true, tags: ['nautical', 'vintage', 'adventure', 'wheel'],
+    svg: `<svg viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="20" stroke="#6B4426" stroke-width="2" fill="none"/><circle cx="30" cy="30" r="6" stroke="#6B4426" stroke-width="2" fill="#D4A94A"/>${Array.from({length:8},(_,i)=>{const a=i*45*Math.PI/180;const x1=30+6*Math.cos(a);const y1=30+6*Math.sin(a);const x2=30+20*Math.cos(a);const y2=30+20*Math.sin(a);return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#6B4426" stroke-width="1.8"/>`;}).join('')}</svg>`
+  },
+  {
+    id: 'x17', name: 'Clock', nameHe: 'שעון', category: 'vintage', free: true, tags: ['clock', 'time', 'vintage', 'memory'],
+    svg: `<svg viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="22" fill="#F5EDE0" stroke="#D4A94A" stroke-width="2"/><circle cx="30" cy="30" r="19" fill="none" stroke="#E8DCC8" stroke-width="1"/><path d="M30 14 L30 18" stroke="#3D2E20" stroke-width="2" stroke-linecap="round"/><path d="M30 42 L30 46" stroke="#3D2E20" stroke-width="2" stroke-linecap="round"/><path d="M14 30 L18 30" stroke="#3D2E20" stroke-width="2" stroke-linecap="round"/><path d="M42 30 L46 30" stroke="#3D2E20" stroke-width="2" stroke-linecap="round"/><path d="M30 30 L30 22" stroke="#8B2635" stroke-width="2" stroke-linecap="round"/><path d="M30 30 L36 30" stroke="#3D2E20" stroke-width="1.5" stroke-linecap="round"/><circle cx="30" cy="30" r="2" fill="#D4A94A"/></svg>`
+  },
+  {
+    id: 'x18', name: 'Sun', nameHe: 'שמש', category: 'mood', free: true, tags: ['sun', 'happy', 'summer', 'bright'],
+    svg: `<svg viewBox="0 0 60 60" fill="none"><circle cx="30" cy="30" r="12" fill="#E5A540"/>${Array.from({length:8},(_,i)=>{const a=i*45*Math.PI/180;const x1=30+14*Math.cos(a);const y1=30+14*Math.sin(a);const x2=30+22*Math.cos(a);const y2=30+22*Math.sin(a);return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#E5A540" stroke-width="2.5" stroke-linecap="round"/>`;}).join('')}<circle cx="30" cy="30" r="8" fill="#F4C542"/></svg>`
+  },
+  {
+    id: 'x19', name: 'Cloud', nameHe: 'עננה', category: 'mood', free: true, tags: ['cloud', 'dream', 'soft', 'sky'],
+    svg: `<svg viewBox="0 0 60 60" fill="none"><ellipse cx="30" cy="35" rx="20" ry="12" fill="#E8F0F8"/><circle cx="22" cy="32" r="10" fill="#EDF3F9"/><circle cx="36" cy="30" r="12" fill="#EDF3F9"/><circle cx="28" cy="28" r="10" fill="#F0F5FA"/></svg>`
+  },
+  {
+    id: 'x20', name: 'Fire', nameHe: 'אש', category: 'mood', free: true, tags: ['fire', 'passion', 'energy', 'warm'],
+    svg: `<svg viewBox="0 0 60 60" fill="none"><path d="M30 52 Q18 46 18 34 Q18 26 24 20 Q24 28 28 28 Q24 20 28 10 Q34 18 36 24 Q40 18 40 12 Q46 20 46 32 Q46 46 30 52Z" fill="#C4541C"/><path d="M30 52 Q22 44 22 36 Q22 30 26 26 Q26 32 30 32 Q30 26 32 20 Q36 28 36 34 Q38 28 38 24 Q42 30 42 38 Q42 48 30 52Z" fill="#E5A540"/><path d="M30 52 Q26 46 26 40 Q28 36 30 36 Q32 36 34 40 Q34 46 30 52Z" fill="#FAF5EB" opacity="0.6"/></svg>`
+  },
+  {
+    id: 'x21', name: 'Shooting Star', nameHe: 'כוכב נופל', category: 'mood', free: true, tags: ['star', 'wish', 'night', 'magic'],
+    svg: `<svg viewBox="0 0 60 60" fill="none"><path d="M14 46 L40 18" stroke="#D4A94A" stroke-width="2" stroke-linecap="round" opacity="0.6"/><path d="M20 48 L42 24" stroke="#E5A540" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/><path d="M40 18 L38 24 L44 20 L38 22 Z" fill="#D4A94A"/><circle cx="42" cy="16" r="4" fill="#F4C542"/><circle cx="42" cy="16" r="2.5" fill="#FAF5EB"/><circle cx="20" cy="14" r="1.5" fill="#D4A94A" opacity="0.6"/><circle cx="50" cy="28" r="1" fill="#E5A540" opacity="0.5"/><circle cx="14" cy="20" r="1.5" fill="#D4A94A" opacity="0.4"/></svg>`
+  },
+  {
+    id: 'x22', name: 'Journal', nameHe: 'מחברת', category: 'vintage', free: true, tags: ['journal', 'writing', 'book', 'diary'],
+    svg: `<svg viewBox="0 0 60 60" fill="none"><rect x="12" y="8" width="34" height="44" rx="3" fill="#8B2635"/><rect x="8" y="10" width="6" height="40" rx="3" fill="#6B1C28"/><rect x="15" y="12" width="28" height="36" rx="2" fill="#FAF5EB"/><path d="M19 20 L41 20 M19 26 L41 26 M19 32 L41 32 M19 38 L35 38" stroke="#D4A94A" stroke-width="1" opacity="0.5"/><path d="M26 14 Q30 16 34 14" stroke="#D4A94A" stroke-width="1.5" fill="none" opacity="0.7"/></svg>`
+  },
+  {
+    id: 'x23', name: 'Crown', nameHe: 'כתר', category: 'vintage', free: true, tags: ['crown', 'queen', 'proud', 'royal'],
+    svg: `<svg viewBox="0 0 60 60" fill="none"><path d="M10 40 L14 20 L24 34 L30 14 L36 34 L46 20 L50 40 Z" fill="#D4A94A"/><path d="M8 40 L52 40 L54 46 L6 46 Z" fill="#C49040"/><circle cx="30" cy="14" r="4" fill="#8B2635"/><circle cx="14" cy="20" r="3" fill="#8B2635"/><circle cx="46" cy="20" r="3" fill="#8B2635"/></svg>`
+  },
+  {
+    id: 'x24', name: 'Dragonfly', nameHe: 'שפירית', category: 'seasonal', free: true, season: 'summer', tags: ['dragonfly', 'summer', 'nature', 'wing'],
+    svg: `<svg viewBox="0 0 60 60" fill="none"><ellipse cx="30" cy="30" rx="3" ry="16" fill="#5A8C9B"/><ellipse cx="30" cy="20" rx="3" ry="6" fill="#6BA8B8"/><ellipse cx="22" cy="22" rx="11" ry="6" fill="#A8D8E8" opacity="0.7" transform="rotate(-20 22 22)"/><ellipse cx="38" cy="22" rx="11" ry="6" fill="#A8D8E8" opacity="0.7" transform="rotate(20 38 22)"/><ellipse cx="20" cy="29" rx="9" ry="5" fill="#C4E4F0" opacity="0.6" transform="rotate(-10 20 29)"/><ellipse cx="40" cy="29" rx="9" ry="5" fill="#C4E4F0" opacity="0.6" transform="rotate(10 40 29)"/><circle cx="30" cy="17" r="3" fill="#2C4A54"/><circle cx="29" cy="16" r="1" fill="#FAF5EB" opacity="0.5"/></svg>`
+  },
+  {
+    id: 'x25', name: 'Owl', nameHe: 'ינשוף', category: 'seasonal', free: true, season: 'autumn', tags: ['owl', 'night', 'wisdom', 'autumn'],
+    svg: `<svg viewBox="0 0 60 60" fill="none"><ellipse cx="30" cy="36" rx="16" ry="18" fill="#9B6B3A"/><ellipse cx="30" cy="28" rx="14" ry="12" fill="#B8843A"/><circle cx="24" cy="26" r="7" fill="#FAF5EB"/><circle cx="36" cy="26" r="7" fill="#FAF5EB"/><circle cx="24" cy="26" r="5" fill="#2C1A0E"/><circle cx="36" cy="26" r="5" fill="#2C1A0E"/><circle cx="25" cy="25" r="2" fill="#FAF5EB"/><circle cx="37" cy="25" r="2" fill="#FAF5EB"/><path d="M27 34 Q30 36 33 34" stroke="#9B6B3A" stroke-width="1.5" fill="none"/><path d="M24 18 L20 12 L28 16 Z" fill="#9B6B3A"/><path d="M36 18 L40 12 L32 16 Z" fill="#9B6B3A"/><path d="M24 48 L22 54 L28 50 Z" fill="#8B5E3C"/><path d="M36 48 L38 54 L32 50 Z" fill="#8B5E3C"/></svg>`
+  },
+];
+
+// Merge extra stickers
+STICKERS.push(...EXTRA_STICKERS);

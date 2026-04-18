@@ -121,3 +121,35 @@ function getDefaultEvents(): CalendarEvent[] {
     { id: 'ev4', date: `${y}-${m}-20`, title: 'פגישת הורים — נועם', member: 'noam', time: '17:30' },
   ];
 }
+
+// STATS
+export function getStats() {
+  const entries = getEntries();
+  const all = Object.values(entries);
+  const withText = all.filter(e => e.text && e.text.length > 10);
+  const totalWords = withText.reduce((sum, e) => sum + e.text.split(/\s+/).length, 0);
+  const totalStickers = all.reduce((sum, e) => sum + e.stickers.length, 0);
+  const moodAvg = withText.length > 0
+    ? withText.reduce((sum, e) => sum + (e.mood || 3), 0) / withText.length
+    : 3;
+  const streak = getStreak();
+  return { totalEntries: withText.length, totalWords, totalStickers, moodAvg, streak };
+}
+
+function getStreak(): number {
+  const entries = getEntries();
+  let streak = 0;
+  const d = new Date();
+  while (true) {
+    const key = formatDateStr(d);
+    const e = entries[key];
+    if (!e || !e.text) break;
+    streak++;
+    d.setDate(d.getDate() - 1);
+  }
+  return streak;
+}
+
+function formatDateStr(d: Date): string {
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
