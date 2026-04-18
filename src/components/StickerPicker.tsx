@@ -5,14 +5,14 @@ import type { Sticker, StickerCategory } from '@/types';
 
 const CATEGORIES: { id: string; label: string }[] = [
   { id: 'all', label: 'הכל' },
-  { id: 'botanical', label: 'בוטני' },
-  { id: 'seasonal', label: 'עונתי' },
-  { id: 'mood', label: 'מצב רוח' },
-  { id: 'washi', label: 'וואשי' },
-  { id: 'vintage', label: 'ווינטג׳' },
-  { id: 'family', label: 'משפחה' },
-  { id: 'food', label: 'אוכל' },
-  { id: 'travel', label: 'טיול' },
+  { id: 'botanical', label: 'פרחים 🌸' },
+  { id: 'seasonal', label: 'עונות 🍂' },
+  { id: 'mood', label: 'רגש ❤️' },
+  { id: 'washi', label: 'סרטי נייר' },
+  { id: 'vintage', label: 'רטרו ✉️' },
+  { id: 'family', label: 'משפחה 🏠' },
+  { id: 'food', label: 'אוכל ☕' },
+  { id: 'travel', label: 'טיול ✈️' },
 ];
 
 interface Props {

@@ -10,6 +10,7 @@ import MemoriesPage from '@/components/Memories';
 import FamilyCalendar from '@/components/FamilyCalendar';
 import ProfilePage from '@/components/ProfilePage';
 import YearBook from '@/components/YearBook';
+import InstallBanner from '@/components/InstallBanner';
 import type { View } from '@/types';
 
 type Page = 'main' | 'daily' | 'wotw' | 'memories' | 'family' | 'profile' | 'yearbook';
@@ -28,28 +29,44 @@ export default function ShamurApp() {
     if (m > 11) { m = 0; y++; }
     setMonth(m); setYear(y);
   };
-
   const nav = (p: Page) => setPage(p);
   const back = () => setPage('main');
 
   if (page === 'daily')    return <div className="h-full"><DailyCanvas date={selectedDate} onBack={back} /></div>;
   if (page === 'wotw')     return <div className="h-full"><WordOfWeekPage onClose={back} /></div>;
-  if (page === 'memories') return <div className="h-full"><MemoriesPage onDayClick={(d)=>{setSelectedDate(d);nav('daily');}} onClose={back} /></div>;
+  if (page === 'memories') return <div className="h-full"><MemoriesPage onDayClick={(d)=>{ setSelectedDate(d); nav('daily'); }} onClose={back} /></div>;
   if (page === 'family')   return <div className="h-full"><FamilyCalendar onClose={back} /></div>;
   if (page === 'yearbook') return <div className="h-full"><YearBook onClose={back} /></div>;
-  if (page === 'profile')  return <div className="h-full"><ProfilePage onNavigate={(p)=>nav(p as Page)} onClose={back} /></div>;
+  if (page === 'profile')  return <div className="h-full"><ProfilePage onNavigate={(p) => nav(p as Page)} onClose={back} /></div>;
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col relative">
+      {/* Top bar */}
       <div className="flex items-center justify-between px-4 py-2.5 bg-shamur-paper border-b border-shamur-gold/15 flex-shrink-0">
         <div style={{ fontFamily: 'var(--font-display)', fontSize: '22px', color: '#8B2635' }}>שמור</div>
         <div style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: '10px', letterSpacing: '4px', color: '#6B7340' }}>shamur · יומן</div>
       </div>
+
+      {/* Main view */}
       <div className="flex-1 overflow-hidden">
-        {view === 'monthly' && <MonthlyView year={year} month={month} onDayClick={handleDayClick} onNavigate={handleMonthNav} />}
-        {view === 'weekly'  && <WeeklyView anchor={selectedDate} onDayClick={handleDayClick} onNavigate={(d)=>setSelectedDate(addDays(selectedDate, d))} />}
+        {view === 'monthly' && (
+          <MonthlyView year={year} month={month} onDayClick={handleDayClick} onNavigate={handleMonthNav} />
+        )}
+        {view === 'weekly' && (
+          <WeeklyView anchor={selectedDate} onDayClick={handleDayClick} onNavigate={(d) => setSelectedDate(addDays(selectedDate, d))} />
+        )}
       </div>
-      <TabBar view={view} onViewChange={setView} onNewEntry={()=>{setSelectedDate(today());setPage('daily');}} onProfile={()=>nav('profile')} />
+
+      {/* Tab bar */}
+      <TabBar
+        view={view}
+        onViewChange={setView}
+        onNewEntry={() => { setSelectedDate(today()); setPage('daily'); }}
+        onProfile={() => nav('profile')}
+      />
+
+      {/* Install banner */}
+      <InstallBanner />
     </div>
   );
 }
